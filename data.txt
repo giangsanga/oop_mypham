@@ -1,0 +1,34 @@
+Ma hang: VN1111
+Ten hang: SUNPLAY
+Cong dung: CHONG NANG CHO DA
+Nguon goc: JAPAN
+Tri gia san pham: 148000
+So luong: 10
+
+Ma hang: VN1112
+Ten hang: HADA LABO
+Cong dung: DUONG AM CHO DA
+Nguon goc: JAPAN
+Tri gia san pham: 176000
+So luong: 7
+
+Ma hang: VN1113
+Ten hang: CETAPHIL
+Cong dung: SUA RUA MAT, SACH NHON
+Nguon goc: CANADA
+Tri gia san pham: 126000
+So luong: 17
+
+Ma hang: VN1119
+Ten hang: THAI DUONG
+Cong dung: DAU DOI
+Nguon goc: VIET NAM
+Tri gia san pham: 110000
+So luong: 10
+
+Ma hang: VN7878
+Ten hang: VASELINE
+Cong dung: DUONG MOI
+Nguon goc: MY
+Tri gia san pham: 30000
+So luong: 10
