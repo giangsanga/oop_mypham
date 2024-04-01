@@ -112,6 +112,7 @@ int main(){
     mypham* sanpham = new mypham[100];
     sanpham[0].themthongtin();
     sanpham[1].themthongtin();
+    sanpham[2].themthongtin();
     sanpham->hienthithongtin("haha");
     return 0;
 }
