@@ -2,30 +2,80 @@
 #include <string>
 #include <fstream>
 using namespace std;
+class date{
+    public:
+    int ngay;
+    int thang;
+    int nam;
+};
+// class 
+class khachhang{
+    private:
+    string hovaTen;
+    date ngaysinh;
+    public:
+    void nhapngaysinh(){
+        cin >> ngaysinh.ngay;
+    }
+    void hienngaysinh(){
+        cout << ngaysinh.ngay;
+    }
+};
 class mypham{
     private:
-    std::string maHang;
-    std::string tenHang;
-    std::string nguonGoc;
-    std::string congDung;
+    string maHang;
+    string tenHang;
+    string nguonGoc;
+    string congDung;
     float triGia;
     int soLuong;
     public:
     void hienthithongtin(string maHang);
     void suathongtin(string maHang);
     void themthongtin();
+    // string getmaHang(string maHang);
     // int kiemTraArr(string f_txt);
     // int timKiem(mypham sanpham[], string mahang, int n);
     // void thanhToan(mypham sanpham[]);
     // void xemThongTinTatCaSanpham(mypham sanpham[]);
 };
+// class date : public mypham{
+//     private:
+//     int ngay;
+//     int thang;
+//     int nam;
+//     public:
+//     date();
+//     date(int ngay, int thang, int nam);
+//     void thongtindate();
+//     void nsx();
+//     void hsd();
+// };
+class chatluong : public mypham{
+    private:
+    int sao; //1-5 sao
+    string danhgia; //danh gia ve chat luong san pham
+    public:
+    void vietdanhgia(string maHang);
+};
+void chatluong::vietdanhgia(string maHang){
+    cout << "Danh gia tu 1-5 sao: ";//Danh gia 1-5 sao
+    cin >> sao;
+    while(sao<1||sao>5){
+        cout << "Danh gia tu 1-5 sao: ";
+        cin >> sao;
+    }
+    cout << "Nhan xet ve san pham: \n"; //Viet danh gia
+    cin.ignore();
+    getline(cin, danhgia);
+}
 void mypham::hienthithongtin(string mahang){
-    std::cout << "Ma hang: " << maHang << std::endl;
-    std::cout << "Ten hang: " << tenHang << std::endl;
-    std::cout << "Nguon goc: " << nguonGoc << std::endl;
-    std::cout << "Cong dung: " << congDung << std::endl;
-    std::cout << "Tri gia: VND" << triGia << std::endl;
-    std::cout << "So luong: " << soLuong << std::endl;
+    cout << "Ma hang: " << maHang << endl;
+    cout << "Ten hang: " << tenHang << endl;
+    cout << "Nguon goc: " << nguonGoc << endl;
+    cout << "Cong dung: " << congDung << endl;
+    cout << "Tri gia: VND" << triGia << endl;
+    cout << "So luong: " << soLuong << endl;
 }
 void mypham::suathongtin(string mahang){
     int choice;
@@ -34,56 +84,57 @@ void mypham::suathongtin(string mahang){
     cout << "1. Tat ca;\n"<< "2. Ma hang;\n" << "3. Ten hang;\n" << "4. Nguon goc;\n" << "5. Cong dung;\n" << "6. Tri gia;\n" << "7. So luong.\n";
     cout << "Chon: ";
     cin >> choice;
+
     switch(choice){
         case 1:{
             std::cout << "Ma hang: ";
             cin.ignore(); // Xóa bộ đệm đầu vào
             getline(cin, maHang);
-            std::cout << "Ten hang: ";
+            cout << "Ten hang: ";
             getline(cin, tenHang);
-            std::cout << "Nguon goc: ";
+            cout << "Nguon goc: ";
             getline(cin, nguonGoc);
-            std::cout << "Cong dung: ";
+            cout << "Cong dung: ";
             getline(cin,congDung);
-            std::cout << "Tri gia: VND" ;
+            cout << "Tri gia: VND" ;
             fflush(stdin);
             cin >> triGia;
-            std::cout << "So luong: ";
+            cout << "So luong: ";
             cin >> soLuong;
             break;
         }
         case 2:{
-            std::cout << "Ma hang: ";
+            cout << "Ma hang: ";
             cin.ignore(); // Xóa bộ đệm đầu vào
             getline(cin, maHang);
             break;
         }
         case 3:{
-            std::cout << "Ten hang: ";
+            cout << "Ten hang: ";
             cin.ignore(); // Xóa bộ đệm đầu vào
             getline(cin, tenHang);
             break;
         }
         case 4:{
-            std::cout << "Nguon goc: ";
+            cout << "Nguon goc: ";
             cin.ignore(); // Xóa bộ đệm đầu vào
             getline(cin, nguonGoc);
             break;
         }
         case 5:{
-            std::cout << "Cong dung: ";
+            cout << "Cong dung: ";
             cin.ignore(); // Xóa bộ đệm đầu vào
             getline(cin,congDung);
             break;
         }
         case 6:{
-            std::cout << "Tri gia: VND" ;
+            cout << "Tri gia: VND" ;
             fflush(stdin);
             cin >> triGia;
             break;
         }
         case 7:{
-            std::cout << "So luong: ";
+            cout << "So luong: ";
             fflush(stdin);
             cin >> soLuong;
             break;
@@ -110,20 +161,8 @@ void mypham::themthongtin(){
 }
 int main(){
     mypham* sanpham = new mypham[100];
-    sanpham[0].themthongtin();
-    sanpham[1].themthongtin();
-    sanpham[2].themthongtin();
-    sanpham->hienthithongtin("haha");
+    khachhang mangnguoi[10];
+    mangnguoi[0].nhapngaysinh();
+    mangnguoi[0].hienngaysinh();
     return 0;
 }
-// int main(){
-//     mypham* sanpham = new mypham[100];
-//     // mypham::docFile(sanpham, "data.txt");
-//     while(1){//Vòng lặp chương trình;
-//         system("cls");
-//         int exitchoice = menuchinh(sanpham);
-//         if(exitchoice == 0) break;
-//     }
-//     delete[] sanpham;
-//     return 0;
-// }
