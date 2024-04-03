@@ -8,7 +8,7 @@ class date{
     int thang;
     int nam;
 };
-class khachhang{
+class nguoi{
     private:
     string hovaTen;
     date ngaysinh;
@@ -21,11 +21,15 @@ class khachhang{
         cout << ngaysinh.ngay;
     }
 };
-class khachhangVip : public khachhang{
+class khachhangVip : public nguoi{
     string ID;
     float giamGia;// phan tram giam gia
     int soSanphamDamua;
     int ngayThamgia;
+};
+class nhanvien : public nguoi{
+    string maNhanvien;
+    string chucVu;
 };
 class mypham{
     private:
