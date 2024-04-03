@@ -8,11 +8,11 @@ class date{
     int thang;
     int nam;
 };
-// class 
 class khachhang{
     private:
     string hovaTen;
     date ngaysinh;
+    string sodienthoai;
     public:
     void nhapngaysinh(){
         cin >> ngaysinh.ngay;
@@ -20,6 +20,12 @@ class khachhang{
     void hienngaysinh(){
         cout << ngaysinh.ngay;
     }
+};
+class khachhangVip : public khachhang{
+    string ID;
+    float giamGia;// phan tram giam gia
+    int soSanphamDamua;
+    int ngayThamgia;
 };
 class mypham{
     private:
@@ -33,11 +39,15 @@ class mypham{
     void hienthithongtin(string maHang);
     void suathongtin(string maHang);
     void themthongtin();
-    // string getmaHang(string maHang);
-    // int kiemTraArr(string f_txt);
-    // int timKiem(mypham sanpham[], string mahang, int n);
-    // void thanhToan(mypham sanpham[]);
-    // void xemThongTinTatCaSanpham(mypham sanpham[]);
+};
+class mypham_dadau : public mypham{
+
+};
+class mypham_dathuong : public mypham{
+
+};
+class mypham_dakho : public mypham{
+
 };
 // class date : public mypham{
 //     private:
@@ -165,4 +175,4 @@ int main(){
     mangnguoi[0].nhapngaysinh();
     mangnguoi[0].hienngaysinh();
     return 0;
-}
+}z
