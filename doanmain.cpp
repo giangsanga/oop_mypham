@@ -253,7 +253,7 @@ int main(){
     khachHangVip* nguoimua = new khachHangVip[10];
     myphamNoi* suaruamat = new myphamNoi[10];
     cout << "Nhap sua rua mat:\n";
-    cout << suaruamat->getNguongoc();
+    cout << suaruamat[0].getNguongoc();
     // nguoimua->thanhToan(nguoimua->soSanphamDamua,nguoimua->phamTramGiamgia)
     return 0;
 }
