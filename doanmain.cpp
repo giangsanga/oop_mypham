@@ -89,14 +89,16 @@ void myphamNoi::suaThongtin(){
             cin.ignore(); // Xóa bộ đệm đầu vào
             getline(cin, maHang);
             cout << "Ten hang: ";
+            cin.ignore(); // Xóa bộ đệm đầu vào
             getline(cin, tenHang);
-            cout << "Nguon goc: ";
-            string ng_goc;
-            getline(cin, ng_goc);
-            setNguonGoc(ng_goc);
+            // cout << "Nguon goc: ";
+            // string ng_goc;
+            // getline(cin, ng_goc);
+            // setNguonGoc(ng_goc);
             cout << "Cong dung: ";
+            cin.ignore(); // Xóa bộ đệm đầu vào
             getline(cin,congDung);
-            cout << "Tri gia: VND" ;
+            cout << "Tri gia (VND): " ;
             fflush(stdin);
             cin >> triGia;
             cout << "So luong: ";
@@ -253,7 +255,10 @@ int main(){
     khachHangVip* nguoimua = new khachHangVip[10];
     myphamNoi* suaruamat = new myphamNoi[10];
     cout << "Nhap sua rua mat:\n";
-    cout << suaruamat[0].getNguongoc();
+    cout << suaruamat[0].getNguongoc() << endl;
+    suaruamat[0].setThongtin();
+    suaruamat[0].hienthithongtin();
+    cout << suaruamat[0].getNguongoc() << endl;
     // nguoimua->thanhToan(nguoimua->soSanphamDamua,nguoimua->phamTramGiamgia)
     return 0;
 }
