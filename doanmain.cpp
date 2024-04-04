@@ -234,18 +234,17 @@ void chatluong::vietdanhgia(string maHang){
     getline(cin, danhgia);
 }
 void myphamNoi::setThongtin(){
-    fflush(stdin);
     cout << "Nhap ma hang: ";
+    // cin.ignore(); // Xóa bộ đệm đầu vào
     getline(cin, maHang);
     cout << "Nhap ten hang: ";
-    cin.ignore(); // Xóa bộ đệm đầu vào
     getline(cin, tenHang);
     cout << "Nhap cong dung: ";
     getline(cin, congDung);
-    cout << "Nhap nguon goc: ";
-    string ng_goc;
-    getline(cin, ng_goc);
-    setNguonGoc(ng_goc);
+    // cout << "Nhap nguon goc: ";
+    // string ng_goc;
+    // getline(cin, ng_goc);
+    // setNguonGoc(ng_goc);
     cout << "Nhap tri gia san pham: ";
     cin >> triGia;
     cout << "Nhap so luong: ";
