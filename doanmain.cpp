@@ -2,66 +2,42 @@
 #include <string>
 #include <fstream>
 using namespace std;
-
 class date{
-    private:
+    public:
     int ngay;
     int thang;
     int nam;
-    public:
-    date();
+    date(){};
     date(int ngay, int thang, int nam){
         this->ngay = ngay;
         this->thang = thang;
         this->nam = nam;
-    }
-    void setNgay(int n){
-        this->ngay = n;
-    }
-    void setThang(int t){
-        this->thang = t;
-    }
-    void setNam(int n){
-        this->nam = n;
-    }
-    int getNgay(){
-        return ngay;
-    }
-    int getThang(){
-        return thang;
-    }
-    int getNam(){
-        return nam;
     }
 };
 class hangHoa{
     private:
     string tenHang;
     int soLuong;
+    date ngayNhapHang;
     public:
-    string getTenHang(){
-        return tenHang;
-    }
+    hangHoa(){};
     void setTenHang(){
         cout << "Nhap ten hang: ";
         cin.ignore(); // Xóa bộ đệm đầu vào
         getline(cin, tenHang);
     }
-    int getsoLuong(){
-        return soLuong;
+    void setTenHang(string tenHang){
+        this->tenHang = tenHang;
     }
     void setSoluong(){
         cout << "Nhap so luong: ";
         cin >> soLuong;
     }
-};
-class hangNoidia : public hangHoa{
-    private:
-    string nguonGoc = "Viet Nam";
-    date ngayNhapHang;
-    public:
-    string getNguongoc(){
-        return nguonGoc;
+    void setSoluong(int soLuong){
+        this->soLuong = soLuong;
+    }
+    void setNgayNhapHang(int ngay, int thang, int nam){
+        ngayNhapHang = date(ngay, thang, nam);
     }
     void setNgayNhapHang(){
         cout << "Nhap ngay nhap hang: \n";
@@ -69,40 +45,54 @@ class hangNoidia : public hangHoa{
         cin >> ngayNhapHang.ngay;
         cout << "Thang: ";
         cin >> ngayNhapHang.thang;
-        cout << "Nam : ";
+        cout << "Nam: ";
         cin >> ngayNhapHang.nam;
+    }
+    string getTenHang(){
+        return tenHang;
+    }
+    int getSoluong(){
+        return soLuong;
     }
     date getNgayNhaphang(){
         return ngayNhapHang;
     }
-    void setNguongoc(const string& value) {
-        cout << "Nhap nguon goc:";
-        nguonGoc = value;
+};
+class hangNoidia : public hangHoa{
+    private:
+    string nguonGoc = "Viet Nam";
+    public:
+    hangNoidia(){};
+    string getNguongoc(){
+        return nguonGoc;
     }
 };
 class hangNgoaidia : public hangHoa{
     private:
     string nguonGoc;
-    date ngayNhapHang;
+    float thueNhapkhau = 10/100; //% thuế
     public:
+    hangNgoaidia(){};
     string getNguongoc(){
         return nguonGoc;
     }
-    void setNguonGoc(const string& value) {
-        nguonGoc = value;
-    }
-    void setNgayNhapHang(date ngayNhapHang){
-        cout << "Nhap ngay nhap hang: \n";
-        cout << "Ngay: ";
-        cin >> ngayNhapHang.ngay;
-        cout << "Thang: ";
-        cin >> ngayNhapHang.thang;
-        cout << "Nam : ";
-        cin >> ngayNhapHang.nam;
+    float getThueNhapkhau(){
+        return thueNhapkhau;
     }
     void setNguongoc(){
         cout << "Nhap nguon goc: ";
-
+        cin.ignore(); // Xóa bộ đệm đầu vào
+        getline(cin, nguonGoc);
+    }
+    void setNguongoc(string ng_goc){
+        this->nguonGoc = ng_goc;
+    }
+    void setThueNhapkhau(){
+        cout << "Nhap phan tram thue nhap khau: ";
+        cin >> thueNhapkhau;
+    }
+    void setThueNhapkhau(int thue){
+        this->thueNhapkhau = thue;
     }
 };
 class myphamNoi : public hangNoidia{
@@ -111,6 +101,7 @@ class myphamNoi : public hangNoidia{
     string maHang;
     float triGia;
     public:
+    myphamNoi(){};
     string getCongDung(){
         return congDung;
     }
@@ -120,26 +111,41 @@ class myphamNoi : public hangNoidia{
     float getTriGia(){
         return triGia;
     }
-    void setThongtin(){
+    void setMaHang(){
         cout << "Nhap ma hang: ";
-        // cin.ignore(); // Xóa bộ đệm đầu vào
-        getline(cin, maHang);
-        cout << "Nhap ten hang: ";
-        getline(cin, getTenHang());
+        getline(cin,maHang);
+    }
+    void setMaHang(string mH){
+        this->maHang = mH;
+    }
+    void setCongDung(){
         cout << "Nhap cong dung: ";
         getline(cin, congDung);
-        cout << "Nhap tri gia san pham: ";
+    }
+    void setCongDung(string cD){
+        this->congDung = cD;
+    }
+    void setTrigia(){
+        cout<<"Nhap tri gia: ";
         cin >> triGia;
-        cout << "Nhap so luong: ";
-        cin >> getsoLuong();
+    }
+    void setTrigia(float tG){
+        this->triGia = tG;
+    }
+    void setThongtin(){
+        setMaHang();
+        setTenHang();
+        setCongDung();
+        setTrigia();
+        setSoluong();
     }
     void hienThiThongtin(){
-        cout << "Ma hang: " << maHang << endl;
+        cout << "Ma hang: " << getMahang() << endl;
         cout << "Ten hang: " << getTenHang() << endl;
         cout << "Nguon goc: " << getNguongoc() << endl;
-        cout << "Cong dung: " << congDung << endl;
-        cout << "Tri gia: VND" << triGia << endl;
-        setSoluong();
+        cout << "Cong dung: " << getCongDung() << endl;
+        cout << "Tri gia: VND" << getTriGia() << endl;
+        cout << "So luong: " << getSoluong() << endl;
     }
     void suaThongtin(){
         int choice;
@@ -149,42 +155,27 @@ class myphamNoi : public hangNoidia{
         cin >> choice;
         switch(choice){
             case 1:{
-                std::cout << "Ma hang: ";
-                cin.ignore(); // Xóa bộ đệm đầu vào
-                getline(cin, maHang);
-                cout << "Ten hang: ";
+                setMaHang();
                 setTenHang();
-                cout << "Cong dung: ";
-                cin.ignore(); // Xóa bộ đệm đầu vào
-                getline(cin,congDung);
-                cout << "Tri gia (VND): " ;
-                fflush(stdin);
-                cin >> triGia;
-                cout << "So luong: ";
+                setCongDung();
+                setTrigia();
                 setSoluong();
                 break;
             }
             case 2:{
-                cout << "Ma hang: ";
-                cin.ignore(); // Xóa bộ đệm đầu vào
-                getline(cin, maHang);
+                setMaHang();
                 break;
             }
             case 3:{
-                cout << "Ten hang: ";
                 setTenHang();
                 break;
             }
             case 4:{
-                cout << "Cong dung: ";
-                cin.ignore(); // Xóa bộ đệm đầu vào
-                getline(cin,congDung);
+                setCongDung();
                 break;
             }
             case 5:{
-                cout << "Tri gia: VND" ;
-                fflush(stdin);
-                cin >> triGia;
+                setTrigia();
                 break;
             }
             case 6:{
@@ -201,104 +192,136 @@ class myphamNgoai : public hangNgoaidia{
     string congDung;
     string maHang;
     float triGia;
-    float thueNhapkhau = 10/100; //% thuế
     public:
-    void setThue(){
-        cout << "Nhap thue:";
-        cin >> thueNhapkhau;
+    myphamNgoai(){};
+    string getCongDung(){
+        return congDung;
     }
-    float getThue(){
-        return thueNhapkhau;
+    string getMahang(){
+        return maHang;
     }
-    void setThongtin(){
+    float getTriGia(){
+        return triGia;
+    }
+    void setMaHang(){
         cout << "Nhap ma hang: ";
-        // cin.ignore(); // Xóa bộ đệm đầu vào
         getline(cin, maHang);
-        cout << "Nhap ten hang: ";
-        getline(cin, tenHang);
+    }
+    void setMaHang(string mH){
+        this->maHang = mH;
+    }
+    void setCongDung(){
         cout << "Nhap cong dung: ";
         getline(cin, congDung);
-        cout << "Nhap nguon goc: ";
-        string ng_goc;
-        getline(cin, ng_goc);
-        setNguonGoc(ng_goc);
-        cout << "Nhap tri gia san pham: ";
+    }
+    void setCongDung(string cD){
+        this->congDung = cD;
+    }
+    void setTrigia(){
+        cout<<"Nhap tri gia: ";
         cin >> triGia;
-        cout << "Nhap so luong: ";
-        cin >> soLuong;
+    }
+    void setTrigia(float tG){
+        this->triGia = tG;
+    }
+    void setThongtin(){
+        setMaHang();
+        setTenHang();
+        setCongDung();
+        setTrigia();
+        setSoluong();
+        setThueNhapkhau();
     }
     void hienThiThongtin(){
-        cout << "Ma hang: " << maHang << endl;
-        cout << "Ten hang: " << tenHang << endl;
+        cout << "Ma hang: " << getMahang() << endl;
+        cout << "Ten hang: " << getTenHang() << endl;
         cout << "Nguon goc: " << getNguongoc() << endl;
-        cout << "Cong dung: " << congDung << endl;
-        cout << "Tri gia: VND" << triGia << endl;
-        cout << "So luong: " << soLuong << endl;
+        cout << "Cong dung: " << getCongDung() << endl;
+        cout << "Tri gia: VND" << getTriGia() << endl;
+        cout << "So luong: " << getSoluong() << endl;
+        cout << "Thue nhap khau: "<< getThueNhapkhau() <<endl;
     }
     void suaThongtin(){
         int choice;
         cout << "Can sua thong tin gi: \n";
-        cout << "1. Tat ca;\n"<< "2. Ma hang;\n" << "3. Ten hang;\n"<< "4. Nguon goc;\n" << "5. Cong dung;\n" << "6. Tri gia;\n" << "7. So luong.\n";
+        cout << "1. Tat ca;\n"<< "2. Ma hang;\n" << "3. Ten hang;\n"<< "4. Nguon goc;\n" << "5. Cong dung;\n" << "6. Tri gia;\n" << "7. So luong.\n" <<"8. Thue.\n";
         cout << "Chon: ";
         cin >> choice;
         switch(choice){
             case 1:{
-                std::cout << "Ma hang: ";
-                cin.ignore(); // Xóa bộ đệm đầu vào
-                getline(cin, maHang);
-                cout << "Ten hang: ";
-                cin.ignore();
-                getline(cin, tenHang);
-                cout << "Nguon goc: ";
-                string ng_goc;
-                getline(cin, ng_goc);
-                setNguonGoc(ng_goc);
-                cout << "Cong dung: ";
-                cin.ignore();
-                getline(cin, congDung);
-                cout << "Tri gia (VND): " ;
-                fflush(stdin);
-                cin >> triGia;
-                cout << "So luong: ";
-                cin >> soLuong;
+                // std::cout << "Ma hang: ";
+                // cin.ignore(); // Xóa bộ đệm đầu vào
+                // getline(cin, maHang);
+                // cout << "Ten hang: ";
+                // cin.ignore();
+                // getline(cin, tenHang);
+                // cout << "Nguon goc: ";
+                // string ng_goc;
+                // getline(cin, ng_goc);
+                // setNguonGoc(ng_goc);
+                // cout << "Cong dung: ";
+                // cin.ignore();
+                // getline(cin, congDung);
+                // cout << "Tri gia (VND): " ;
+                // fflush(stdin);
+                // cin >> triGia;
+                // cout << "So luong: ";
+                // cin >> soLuong;
+                setMaHang();
+                setTenHang();
+                setNguongoc();
+                setCongDung();
+                setTrigia();
+                setSoluong();
+                setThueNhapkhau();
                 break;
             }
             case 2:{
-                cout << "Ma hang: ";
-                cin.ignore();
-                getline(cin, maHang);
+                // cout << "Ma hang: ";
+                // cin.ignore();
+                // getline(cin, maHang);
+                setMaHang();
                 break;
             }
             case 3:{
-                cout << "Ten hang: ";
-                cin.ignore();
-                getline(cin, tenHang);
+                // cout << "Ten hang: ";
+                // cin.ignore();
+                // getline(cin, tenHang);
+                setTenHang();
                 break;
             }
             case 4:{
-                cout << "Nguon goc: ";
-                string ng_goc;
-                cin.ignore(); 
-                getline(cin, ng_goc);
-                setNguonGoc(ng_goc);
+                // cout << "Nguon goc: ";
+                // string ng_goc;
+                // cin.ignore(); 
+                // getline(cin, ng_goc);
+                // setNguonGoc(ng_goc);
+                setNguongoc();
                 break;
             }
             case 5:{
-                cout << "Cong dung: ";
-                cin.ignore(); 
-                getline(cin,congDung);
+                // cout << "Cong dung: ";
+                // cin.ignore(); 
+                // getline(cin,congDung);
+                setCongDung();
                 break;
             }
             case 6:{
-                cout << "Tri gia: VND" ;
-                fflush(stdin);
-                cin >> triGia;
+                // cout << "Tri gia: VND" ;
+                // fflush(stdin);
+                // cin >> triGia;
+                setTrigia();
                 break;
             }
             case 7:{
-                cout << "So luong: ";
-                fflush(stdin);
-                cin >> soLuong;
+                // cout << "So luong: ";
+                // fflush(stdin);
+                // cin >> soLuong;
+                setSoluong();
+                break;
+            }
+            case 8:{
+                setThueNhapkhau();
                 break;
             }
             default:
@@ -306,69 +329,221 @@ class myphamNgoai : public hangNgoaidia{
         }
     }
 };
+
 class nguoi{
     private:
     string hoVaTen;
-    date ngaysinh;
-    string sodienthoai;
+    date ngaySinh;
+    string soDienthoai;
     public:
-    void nhapNgaySinh(){
-        cin >> ngaysinh.ngay;
+    nguoi(){};
+    string getHovaTen(){
+        return hoVaTen;
     }
-    void hiennNgaySinh(){
-           cout << ngaysinh.ngay;
+    date getNgaySinh(){
+        return ngaySinh;
     }
-    void nhapTen(){
-        cin.ignore();
+    string getsoDienthoai(){
+        return soDienthoai;
+    }
+    void setHovaTen(){
+        cout << "Nhap ho va ten: ";
         getline(cin, hoVaTen);
     }
-    void hienTen(){
-        cout << hoVaTen;
+    void setHovaTen(string HvT){
+        this->hoVaTen = HvT;
     }
-
+    void setNgaysinh(){
+        cout << "Nhap ngay sinh: ";
+        cout << "Ngay: ";
+        int ngay;
+        cin >> ngay;
+        cout << "Thang: ";
+        int thang;
+        cin >> thang;
+        cout << "Nam :";
+        int nam;
+        cin >> nam;
+        this->ngaySinh = date(ngay, thang, nam);
+    }
+    void setNgaysinh(int ngay, int thang, int nam){
+        this -> ngaySinh = date(ngay, thang, nam);
+    }
+    void setSoDienthoai(){
+        cout << "Nhap so dien thoai: ";
+        getline(cin, this->soDienthoai);
+    }
+    void setSoDienthoai(string sdt){
+        this->soDienthoai = sdt;
+    }
 };
+
 class khachHangThuong : public nguoi{
     private:
     date ngayMua;
+    int soHangdaMua;
     public:
-    void khachHangThuong::chinhSua(){
+    khachHangThuong(){};
+    void setNgaymua(){
+        cout << "Nhap ngay mua hang: ";
+        cout << "Ngay: ";
+        int ngay;
+        cin >> ngay;
+        cout << "Thang: ";
+        int thang;
+        cin >> thang;
+        cout << "Nam :";
+        int nam;
+        cin >> nam;
+        this -> ngayMua = date(ngay, thang, nam);
+    }
+    void setNgaymua(int ngay, int thang, int nam){
+        this -> ngayMua = date(ngay, thang, nam);
+    }
+    void setSoHangdaMua(){
+        cout << "Nhap so hang da mua: ";
+        cin >> soHangdaMua;
+    }
+    void setSoHangdaMua(int shdm){
+        this->soHangdaMua = shdm;
+    }
+    date getNgaymua(){
+        return ngayMua;
+    }
+    int getSoHangdaMua(){
+        return soHangdaMua;
+    }
+    void chinhSua(){
         cout << "1. Chinh sua tat ca thong tin;\n";
         cout << "2. Chinh sua Ho va Ten;\n";
         cout << "3. Chinh sua so dien thoai;\n";
-        cout << "4. Chinh sua ngay tham gia\n";
-        cout << "5. Chinh sua pham tram giam gia;\n";
-        cout << "6. Chinh sua so san pham da mua.\n";
+        // cout << "4. Chinh sua ngay tham gia\n";
+        // cout << "5. Chinh sua pham tram giam gia;\n";
+        cout << "4. Chinh sua so san pham da mua.\n";
         cout << "Chon: ";
         int choice;
         cin >> choice;
         switch(choice){
             case 1: {
-
+                setHovaTen();
+                setSoDienthoai();
+                setSoHangdaMua();
+                break;
             }
             case 2:{
-
+                setHovaTen();
+                break;
             }
+            case 3:{
+                setSoDienthoai();
+                break;
+            }
+            case 4:{
+                setSoHangdaMua();
+                break;
+            }
+            default:
+            break;
         }
     }
-    float khachHangThuong::thanhToan(){
-        while(1){
-            cout << "Nhap ma hang";
+    float thanhToan(myphamNoi list1[], myphamNgoai list2[], int n1, int n2) {
+        float total = 0;
+        while (1) {
+            cout << "Nhap ma hang: ";
             string maHang;
+            cin.ignore();
             getline(cin, maHang);
-            cout << "Nhap so luong";
-            int soluong;
-            cin >> soluong;
+            cout << "Nhap so luong: ";
+            int soLuong;
+            cin >> soLuong;
+
+            // Check if the product is in the local cosmetics list
+            for (int i = 0; i < n1; i++) {
+                if (list1[i].getMahang() == maHang) {
+                    float giaBan = list1[i].getTriGia();
+                    total += giaBan * soLuong;
+                    break;
+                }
+            }
+
+            // Check if the product is in the imported cosmetics list
+            for (int i = 0; i < n2; i++) {
+                if (list2[i].getMahang() == maHang) {
+                    float giaBan = list2[i].getTriGia();
+                    float thueNhapKhau = list2[i].getThueNhapkhau();
+                    giaBan += giaBan * thueNhapKhau;
+                    total += giaBan * soLuong;
+                    break;
+                }
+            }
+            cout << "Nhap 0 de ket thuc thanh toan, nhap 1 de tiep tuc: ";
+            int choice;
+            cin >> choice;
+            if (choice == 0) {
+                break;
+            }
         }
+        return total;
     }
 };
 class khachHangVip : public nguoi{
     private:
     string ID;
     date ngayThamgia;
+    float phanTramGiamgia;
+    int soSanphamdaMua;
     public:
-    float phamTramGiamgia;
-    int soSanphamDamua;
-    void khachHangVip::chinhSua(){
+    khachHangVip(){};
+    string getIDkhachVip(){
+        return ID;
+    }
+    date getNgayThamgia(){
+        return ngayThamgia;
+    }
+    float getPhantramGiamgia(){
+        return phanTramGiamgia;
+    }
+    int getSoSanphamdaMua(){
+        return soSanphamdaMua;
+    }
+    void setIDkhachVip(){
+        cout << "Nhap ID: ";
+        getline(cin, ID);
+    }
+    void setIDkhachVip(string id){
+        this->ID = id;
+    }
+    void setNgayThamgia(){
+        cout << "Nhap ngay mua hang: ";
+        cout << "Ngay: ";
+        int ngay;
+        cin >> ngay;
+        cout << "Thang: ";
+        int thang;
+        cin >> thang;
+        cout << "Nam :";
+        int nam;
+        cin >> nam;
+        this -> ngayThamgia = date(ngay, thang, nam);
+    }
+    void setNgayThamgia(int ngay, int thang, int nam){
+        this -> ngayThamgia = date(ngay, thang, nam);
+    }
+    void setPhantramGiamgia(){
+        cout << "Nhap giam gia: ";
+        cin >> phanTramGiamgia;
+    }
+    void setPhantramGiamgia(float ptgg){
+        this->phanTramGiamgia = ptgg;
+    }
+    void setSoSanphamdaMua(){
+        cout << "Nhap so san pham da mua: ";
+        cin >> soSanphamdaMua;
+    }
+    void setSoSanphamdaMua(int sspdm){
+        this -> soSanphamdaMua = sspdm;
+    }
+    void chinhSua(){
         cout << "1. Chinh sua tat ca thong tin;\n";
         cout << "2. Chinh sua Ho va Ten;\n";
         cout << "3. Chinh sua so dien thoai;\n";
@@ -380,34 +555,110 @@ class khachHangVip : public nguoi{
         cin >> choice;
         switch(choice){
             case 1: {
-
+                setHovaTen();
+                setSoDienthoai();
+                setNgayThamgia();
+                setNgayThamgia();
+                setPhantramGiamgia();
+                setSoSanphamdaMua();
+                break;
             }
             case 2:{
-
+                setHovaTen();
+                break;
+            }
+            case 3:{
+                setSoDienthoai();
+                break;
+            }
+            case 4:{
+                setNgayThamgia();
+                break;
+            }
+            case 5:{
+                setPhantramGiamgia();
+                break;
+            }
+            case 6:{
+                setSoSanphamdaMua();
+                break;
             }
         }
     }
-    float khachHangVip::thanhToan(myphamNoi list1[], myphamNgoai list2[], int n1, int n2){
-        while(1){
-            cout << "Nhap ten hang";
-            string mH;
-            float gT;
-            getline(cin, mH);
-            for(int i = 0; i < n1; i++){
-                if(list1[i].getMahang() == mH){
-                    
+    float thanhToan(myphamNoi list1[], myphamNgoai list2[], int n1, int n2) {
+        float total = 0;
+        while (1) {
+            cout << "Nhap ma hang: ";
+            string maHang;
+            cin.ignore();
+            getline(cin, maHang);
+            cout << "Nhap so luong: ";
+            int soLuong;
+            cin >> soLuong;
+            // Check if the product is in the local cosmetics list
+            for (int i = 0; i < n1; i++) {
+                if (list1[i].getMahang() == maHang) {
+                    total += list1[i].getTriGia() * soLuong * (1 - getPhantramGiamgia());
+                    break;
                 }
             }
-            cout << "Nhap so luong";
-            int soluong;
-            cin >> soluong;
+            // Check if the product is in the imported cosmetics list
+            for (int i = 0; i < n2; i++) {
+                if (list2[i].getMahang() == maHang) {
+                    total += list2[i].getTriGia() * soLuong * (1 - getPhantramGiamgia());
+                    break;
+                }
+            }
+            cout << "Nhap 0 de ket thuc thanh toan, nhap 1 de tiep tuc: ";
+            int choice;
+            cin >> choice;
+            if (choice == 0) {
+                break;
+            }
         }
+        return total;
     }
 };
 class nhanvien : public nguoi{
     string maNhanvien;
     string chucVu;
     string noiO;
+    float luong;
+    public:
+    nhanvien(){};
+    string getMaNhanvien(){
+        return maNhanvien;
+    }
+    string getChucvu(){
+        return chucVu;
+    }
+    string getNoiO(){
+        return noiO;
+    }
+    void setMaNhanvien(){
+        cout << "Nhap ma: ";
+        getline(cin, this->maNhanvien);
+    }
+    void setMaNhanvien(string mnv){
+        this->maNhanvien = mnv;
+    }
+    void setChucvu(){
+        cout << "Nhap chuc vu:";
+        getline(cin, chucVu);
+    }
+    void setChucvu(string cv){
+        this->chucVu = cv;
+    }
+    void setLuong(){
+        cout << "Nhap luong: ";
+        cin >> luong;
+    }
+    void setLuong(float luong){
+        this->luong = luong;
+    }
+};
+class quanly : public nhanvien{
+    
 };
 int checkSanpham(string maHang, myphamNoi list1[], myphamNgoai list2[], int n1, int n2) {
     for(int i = 0; i < n1; i++){
@@ -416,9 +667,6 @@ int checkSanpham(string maHang, myphamNoi list1[], myphamNgoai list2[], int n1, 
         }
     }
 }
-
-
-
 int kiemTraSoSanpham(string f_txt){//Kiểm tra mảng sanpham đã chứa bao nhiêu sản phẩm, f_txt <- data.txt;
     int n = 0;
     string line;
@@ -466,18 +714,6 @@ int menu(myphamNoi list1[], myphamNgoai list2[], khachHangThuong nguoimua1[], kh
     }
 }
 int main(){
-    khachHangThuong* nguoimua1 = new khachHangThuong[50];
-    khachHangVip* nguoimua2 = new khachHangVip[50];
-    myphamNoi* list1 = new myphamNoi[50];
-    myphamNgoai* list2 = new myphamNgoai[50];
-    while(1){
-        menu(list1, list2, nguoimua1, nguoimua2);
-    }
-    myphamNoi suaruamat;
-    cout << suaruamat.getMahang();
-    myphamNoi kemduongam;
-    myphamNoi matna;
-    myphamNoi sp[100];
-    sp[0].setTenHang();
+    
     return 0;
 }
