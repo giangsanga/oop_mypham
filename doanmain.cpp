@@ -1,7 +1,15 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <vector>
 using namespace std;
+namespace Soluong{
+    int Nhanvien = 0;
+    int KhachVip = 0;
+    int KhachThuong = 0;
+    int myphamNoi = 0;
+    int myphamNgoai = 0;
+}
 class date{
     public:
     int ngay;
@@ -133,11 +141,13 @@ class myphamNoi : public hangNoidia{
         this->triGia = tG;
     }
     void setThongtin(){
+        cin.ignore();
         setMaHang();
         setTenHang();
         setCongDung();
         setTrigia();
         setSoluong();
+        setNgayNhapHang();
     }
     void hienThiThongtin(){
         cout << "Ma hang: " << getMahang() << endl;
@@ -186,6 +196,82 @@ class myphamNoi : public hangNoidia{
             break;
         }
     }
+    ///////
+    string f_txt = "data_sanpham_noidia.txt";
+    int kiemTraTxt(){//Kiểm tra file đã chứa bao nhiêu sản phẩm, f_txt <- data.txt;
+        int n = 0;
+        string line;
+        ifstream file("data_sanpham_noidia.txt");
+        while(getline(file, line)){
+            n++;
+        }
+        n = n/8;
+        return n;
+        file.close();
+    }
+    void ghiFile(myphamNoi sanpham[], int soluongsanpham){
+        // int n = kiemTraTxt();
+        while(1){
+            ifstream infile("data_sanpham_noidia.txt");
+            // Kiểm tra file có mở thành công hay không
+            if (infile.is_open()) {
+                // File tồn tại, thực hiện thao tác
+                ofstream fout(f_txt);
+                for(int i = 0; i < soluongsanpham; i++){
+                    fout <<"Ma hang: "<< sanpham[i].getMahang() << endl;
+                    fout <<"Ten hang: " << sanpham[i].getTenHang() << endl;
+                    fout <<"Cong dung: " << sanpham[i].getCongDung() << endl;
+                    fout <<"Tri gia: " <<sanpham[i].getTriGia() << endl;
+                    fout <<"So luong: "<<sanpham[i].getSoluong() << endl;
+                    fout <<"Ngay: " <<sanpham[i].getNgayNhaphang().ngay << endl;
+                    fout <<"Thang: " <<sanpham[i].getNgayNhaphang().thang << endl;
+                    fout <<"NAm: " <<sanpham[i].getNgayNhaphang().nam << endl;
+                }
+                fout.close();
+                infile.close();
+                break;
+            } else {
+                //Tạo file mới;
+                ofstream outfile(f_txt);
+                // Đóng file
+                outfile.close();
+            }
+        }
+
+    }
+    void docFile(myphamNoi sanpham[]){
+        ifstream file(f_txt);
+        if(file.is_open()){
+            int n = kiemTraTxt();
+            int sosanpham = n + 1;
+            string line;
+            int i = 0;
+            while(n != 0 && i < n){
+                getline(file,line);
+                sanpham[i].setMaHang(line.substr(9));
+                getline(file,line);
+                sanpham[i].setTenHang(line.substr(10));
+                getline(file,line);
+                sanpham[i].setCongDung(line.substr(11));
+                getline(file,line);
+                sanpham[i].setTrigia(stof(line.substr(9)));
+                getline(file,line);
+                sanpham[i].setSoluong(stoi(line.substr(10)));
+                getline(file,line);
+                int ngay;
+                ngay = stoi(line.substr(6));
+                getline(file,line);
+                int thang;
+                thang = stoi(line.substr(7));
+                getline(file,line);
+                int nam;
+                nam = stoi(line.substr(5));
+                sanpham[i].setNgayNhapHang(ngay, thang, nam);     
+                i++;
+            }
+            file.close();
+        }
+    }
 };
 class myphamNgoai : public hangNgoaidia{
     private:
@@ -225,12 +311,14 @@ class myphamNgoai : public hangNgoaidia{
         this->triGia = tG;
     }
     void setThongtin(){
+        cin.ignore();
         setMaHang();
         setTenHang();
         setCongDung();
         setTrigia();
         setSoluong();
         setThueNhapkhau();
+        setNgayNhapHang();
     }
     void hienThiThongtin(){
         cout << "Ma hang: " << getMahang() << endl;
@@ -249,24 +337,6 @@ class myphamNgoai : public hangNgoaidia{
         cin >> choice;
         switch(choice){
             case 1:{
-                // std::cout << "Ma hang: ";
-                // cin.ignore(); // Xóa bộ đệm đầu vào
-                // getline(cin, maHang);
-                // cout << "Ten hang: ";
-                // cin.ignore();
-                // getline(cin, tenHang);
-                // cout << "Nguon goc: ";
-                // string ng_goc;
-                // getline(cin, ng_goc);
-                // setNguonGoc(ng_goc);
-                // cout << "Cong dung: ";
-                // cin.ignore();
-                // getline(cin, congDung);
-                // cout << "Tri gia (VND): " ;
-                // fflush(stdin);
-                // cin >> triGia;
-                // cout << "So luong: ";
-                // cin >> soLuong;
                 setMaHang();
                 setTenHang();
                 setNguongoc();
@@ -277,46 +347,26 @@ class myphamNgoai : public hangNgoaidia{
                 break;
             }
             case 2:{
-                // cout << "Ma hang: ";
-                // cin.ignore();
-                // getline(cin, maHang);
                 setMaHang();
                 break;
             }
             case 3:{
-                // cout << "Ten hang: ";
-                // cin.ignore();
-                // getline(cin, tenHang);
                 setTenHang();
                 break;
             }
             case 4:{
-                // cout << "Nguon goc: ";
-                // string ng_goc;
-                // cin.ignore(); 
-                // getline(cin, ng_goc);
-                // setNguonGoc(ng_goc);
                 setNguongoc();
                 break;
             }
             case 5:{
-                // cout << "Cong dung: ";
-                // cin.ignore(); 
-                // getline(cin,congDung);
                 setCongDung();
                 break;
             }
             case 6:{
-                // cout << "Tri gia: VND" ;
-                // fflush(stdin);
-                // cin >> triGia;
                 setTrigia();
                 break;
             }
             case 7:{
-                // cout << "So luong: ";
-                // fflush(stdin);
-                // cin >> soLuong;
                 setSoluong();
                 break;
             }
@@ -326,6 +376,82 @@ class myphamNgoai : public hangNgoaidia{
             }
             default:
             break;
+        }
+    }
+    ///////
+    string f_txt = "data_sanpham_ngoaidia.txt";
+    int kiemTraTxt(){//Kiểm tra file đã chứa bao nhiêu sản phẩm, f_txt <- data.txt;
+        int n = 0;
+        string line;
+        ifstream file("data_sanpham_ngoaidia.txt");
+        while(getline(file, line)){
+            n++;
+        }
+        n = n/8; 
+        return n;
+        file.close();
+    }
+    void ghiFile(myphamNoi sanpham[], int soluongsanpham){
+        // int n = kiemTraTxt();
+        while(1){
+            ifstream infile("data_sanpham_ngoaidia.txt");
+            // Kiểm tra file có mở thành công hay không
+            if (infile.is_open()) {
+                // File tồn tại, thực hiện thao tác
+                ofstream fout(f_txt);
+                for(int i = 0; i < soluongsanpham; i++){
+                    fout <<"Ma hang: "<< sanpham[i].getMahang() << endl;
+                    fout <<"Ten hang: " << sanpham[i].getTenHang() << endl;
+                    fout <<"Cong dung: " << sanpham[i].getCongDung() << endl;
+                    fout <<"Tri gia: " <<sanpham[i].getTriGia() << endl;
+                    fout <<"So luong: "<<sanpham[i].getSoluong() << endl;
+                    fout <<"Ngay: " <<sanpham[i].getNgayNhaphang().ngay << endl;
+                    fout <<"Thang: " <<sanpham[i].getNgayNhaphang().thang << endl;
+                    fout <<"NAm: " <<sanpham[i].getNgayNhaphang().nam << endl;
+                }
+                fout.close();
+                infile.close();
+                break;
+            } else {
+                //Tạo file mới;
+                ofstream outfile(f_txt);
+                // Đóng file
+                outfile.close();
+            }
+        }
+
+    }
+    void docFile(myphamNoi sanpham[]){
+        ifstream file(f_txt);
+        if(file.is_open()){
+            int n = kiemTraTxt();
+            int sosanpham = n + 1;
+            string line;
+            int i = 0;
+            while(n != 0 && i < n){
+                getline(file,line);
+                sanpham[i].setMaHang(line.substr(9));
+                getline(file,line);
+                sanpham[i].setTenHang(line.substr(10));
+                getline(file,line);
+                sanpham[i].setCongDung(line.substr(11));
+                getline(file,line);
+                sanpham[i].setTrigia(stof(line.substr(9)));
+                getline(file,line);
+                sanpham[i].setSoluong(stoi(line.substr(10)));
+                getline(file,line);
+                int ngay;
+                ngay = stoi(line.substr(6));
+                getline(file,line);
+                int thang;
+                thang = stoi(line.substr(7));
+                getline(file,line);
+                int nam;
+                nam = stoi(line.substr(5));
+                sanpham[i].setNgayNhapHang(ngay, thang, nam);     
+                i++;
+            }
+            file.close();
         }
     }
 };
@@ -417,8 +543,6 @@ class khachHangThuong : public nguoi{
         cout << "1. Chinh sua tat ca thong tin;\n";
         cout << "2. Chinh sua Ho va Ten;\n";
         cout << "3. Chinh sua so dien thoai;\n";
-        // cout << "4. Chinh sua ngay tham gia\n";
-        // cout << "5. Chinh sua pham tram giam gia;\n";
         cout << "4. Chinh sua so san pham da mua.\n";
         cout << "Chon: ";
         int choice;
@@ -446,6 +570,9 @@ class khachHangThuong : public nguoi{
             break;
         }
     }
+    float thanhToan(float giatri, int soluong){
+        return giatri = giatri*soluong*(1);
+    }
     float thanhToan(myphamNoi list1[], myphamNgoai list2[], int n1, int n2) {
         float total = 0;
         while (1) {
@@ -456,7 +583,6 @@ class khachHangThuong : public nguoi{
             cout << "Nhap so luong: ";
             int soLuong;
             cin >> soLuong;
-
             // Check if the product is in the local cosmetics list
             for (int i = 0; i < n1; i++) {
                 if (list1[i].getMahang() == maHang) {
@@ -585,6 +711,9 @@ class khachHangVip : public nguoi{
             }
         }
     }
+    float thanhToan(float giatri, int soluong){
+        return giatri = giatri*soluong*(1-getPhantramGiamgia());
+    }
     float thanhToan(myphamNoi list1[], myphamNgoai list2[], int n1, int n2) {
         float total = 0;
         while (1) {
@@ -623,9 +752,26 @@ class nhanvien : public nguoi{
     string maNhanvien;
     string chucVu;
     string noiO;
+    date ngayVaolam;
     float luong;
     public:
     nhanvien(){};
+    void setNgayvaolam(){
+        cout << "Nhap ngay mua hang: ";
+        cout << "Ngay: ";
+        int ngay;
+        cin >> ngay;
+        cout << "Thang: ";
+        int thang;
+        cin >> thang;
+        cout << "Nam :";
+        int nam;
+        cin >> nam;
+        this -> ngayVaolam = date(ngay, thang, nam);
+    }
+    void setNgayvaolam(int ngay, int thang, int nam){
+        this -> ngayVaolam = date(ngay, thang, nam);
+    }
     string getMaNhanvien(){
         return maNhanvien;
     }
@@ -660,51 +806,146 @@ class nhanvien : public nguoi{
 class quanly : public nhanvien{
     
 };
-int checkSanpham(string maHang, myphamNoi list1[], myphamNgoai list2[], int n1, int n2) {
+int timSanpham(string maHang, myphamNoi list1[],
+ myphamNgoai list2[], int n1, int n2, string& nguonGoc) {// Tìm sản phẩm thuộc mỹ phẩm nội hay ngoại, thông qua mã hàng;
+    //trả ra vị trí i phần tử + ma (nguồn gốc), với ma là chuỗi string;
     for(int i = 0; i < n1; i++){
         if(list1[i].getMahang() == maHang){
+            nguonGoc = "myphamNoi";
+            return i;
+        }
+    }
+    for(int i = 0; i < n2; i++){
+        if(list2[i].getMahang() == maHang){
+            nguonGoc = "myphamNgoai";
+            return i;
+        }
+    }
+    cout << "Khong tim thay Hang";
+    return 0;
+}
+int timKhachhangVip(string ID, khachHangVip nguoi[], int n){// Tìm thông tin khách hàng Vip, thông qua ID;
+//Trả ra vị trí i phần tử trong mảng nguoi[];
+    for(int i = 0; i < n; i++){
+        if(nguoi[i].getIDkhachVip() == ID){
             return i;
         }
     }
 }
-int kiemTraSoSanpham(string f_txt){//Kiểm tra mảng sanpham đã chứa bao nhiêu sản phẩm, f_txt <- data.txt;
-    int n = 0;
-    string line;
-    ifstream file(f_txt);
-    while(getline(file, line)){
-        n++;
-    }
-    n = n/7;
-    return n;
-}
+void menuThemSp(myphamNoi list1[], myphamNgoai list2[]){
+    int exit = 1;
+    do{
+        cout << "1. Them my pham noi;\n" << "2. Them my pham ngoai.\n";
+        int choice;
+        cin >> choice;
+        switch(choice){
+            case 1:{
+                list1[Soluong::myphamNoi].setThongtin();
+                Soluong::myphamNoi++;
+                list1->ghiFile(list1, Soluong::myphamNoi);
+                break;
+            }
+            case 2:{
+                Soluong::myphamNgoai++;
+                list2[Soluong::myphamNgoai].setThongtin();
 
-void setUp(myphamNoi list1[], myphamNgoai list2[], khachHangThuong nguoimua1[], khachHangVip nguoimua2[]){
-    cout << "1. Them san pham;\n" << "2. Xoa san pham;\n" << "3. Xem tat ca san pham\n"<<"Chon: ";
+            }
+        } 
+        cout << "Muon tiep tuc them ?\n" << "Chon 0 de exit, 1 de tiep tuc: ";
+        cin >> exit;
+    }while(exit == 1);
+
+}
+void menuXoaSp(myphamNoi list1[], myphamNgoai list2[]){
+
+}
+void menuChinhsuaSp(myphamNoi list1[], myphamNgoai list2[]){
+
+}
+void menuQuanlySp(myphamNoi list1[], myphamNgoai list2[]){
+    cout << "1. Them san pham;\n" 
+    << "2. Xoa san pham;\n" 
+    << "3. Chinh sua san pham.\n"
+    <<"Chon: ";
     int choice;
     cin >> choice;
     switch(choice){
         case 1:{
-
+            menuThemSp(list1, list2);
+            break;
+        }
+        case 2:{
+            menuXoaSp(list1, list2);
+            break;
+        }
+        case 3:{
+            menuChinhsuaSp(list1, list2);
+            break;
         }
     }
 }
-void thanhToan(myphamNoi list1[], myphamNgoai list2[], khachHangThuong nguoimua1[], khachHangVip nguoimua2[]){
-    
+void menuThanhtoanKhachVip(myphamNoi list1[], myphamNgoai list2[], khachHangVip nguoimua[]){
+    cout << "Nhap ID:";
+    cin.ignore();
+    string ID;
+    getline(cin, ID);
+    // cout << ID\n;
+    timKhachhangVip(ID, nguoimua, Soluong::KhachVip);
 }
-int menu(myphamNoi list1[], myphamNgoai list2[], khachHangThuong nguoimua1[], khachHangVip nguoimua2[]){
+void menuThanhtoanKhachthuong(myphamNoi list1[], 
+myphamNgoai list2[], khachHangThuong nguoimua[]){
+
+}
+void menuThanhtoan(myphamNoi list1[], myphamNgoai list2[], 
+khachHangThuong nguoimua1[], khachHangVip nguoimua2[]){
+    cout <<"----------------------Menu Thanh toan-----------------------------\n";
+    cout << "1. Thanh toan danh cho Khach hang Vip;\n"
+    <<"2. Thanh toan danh cho Khach hang thuong.\n"
+    <<"Chon: ";
     int choice;
-    cout << "1. Thanh toan;\n" << "2. Quan ly danh sach my pham;\n" <<"3. Xem thong tin tat ca san pham;\n"<<"0. De thoat.\n"<<"Chon: ";
+    cin >> choice;
+    switch(choice){
+        case 1:{
+            menuThanhtoanKhachVip(list1, list2, nguoimua2);
+            break;
+        }
+        case 2:{
+            menuThanhtoanKhachthuong(list1, list2, nguoimua1);
+            break;
+        }
+    }
+}
+// void xemThongTinTatCaSanpham(myphamNoi list1[], myphamNgoai list2[]){
+
+// }
+void menuQuanlyNhanvien(nhanvien nv[]){
+
+}
+int menu(myphamNoi list1[], myphamNgoai list2[], 
+khachHangThuong nguoimua1[], khachHangVip nguoimua2[], nhanvien nv[]){
+    cout << "------------------------Menu------------------------------\n";
+    int choice;
+    cout << "1. Thanh toan;\n" 
+    << "2. Quan ly danh sach my pham;\n" 
+    <<"3. Quan ly danh sach nhan vien;\n"
+    <<"4. Quan ly danh sach khach hang\n"
+    <<"0. De thoat.\n"
+    <<"Chon: ";
     cin >> choice;
     switch(choice){
         case 1:
-        thanhToan(list1, list2, nguoimua1, nguoimua2);
+        menuThanhtoan(list1, list2, nguoimua1, nguoimua2);
         return 1;
         break;
         case 2:
-        setUp(list1, list2, nguoimua1, nguoimua2);
+        menuQuanlySp(list1, list2);
         return 1;
+        break;
         case 3:
-        // xemThongTinTatCaSanpham(sanpham);
+        menuQuanlyNhanvien(nv);
+        return 1;
+        break;
+        case 4:
         return 1;
         break;
         case 0:
@@ -714,6 +955,44 @@ int menu(myphamNoi list1[], myphamNgoai list2[], khachHangThuong nguoimua1[], kh
     }
 }
 int main(){
-    
+    khachHangThuong* nguoimua1 = new khachHangThuong[50];
+    khachHangVip* nguoimua2 = new khachHangVip[50];
+    myphamNoi* list1 = new myphamNoi[50];
+    myphamNgoai* list2 = new myphamNgoai[50];
+    nhanvien* nv = new nhanvien[50];
+    list1->docFile(list1);
+    Soluong::Nhanvien = 0;
+    Soluong::KhachVip = 0;
+    Soluong::KhachThuong = 0;
+    Soluong::myphamNoi = list1->kiemTraTxt();
+    Soluong::myphamNgoai = 0;
+    // list1[0].setMaHang("ma hang");
+    // list1[0].setTenHang("ten hang");
+    // list1[0].setCongDung("cong dung");
+    // list1[0].setSoluong(3330);
+    // list1[0].setTrigia(333.333);
+    // list1[0].setNgayNhapHang(3,3,3);
+    // Soluong::myphamNoi = Soluong::myphamNoi + 1;
+    // list1[1].setMaHang("ma hang1");
+    // list1[1].setTenHang("ten hang1");
+    // list1[1].setCongDung("cong dung1");
+    // list1[1].setSoluong(33301);
+    // list1[1].setTrigia(333.331);
+    // list1[1].setNgayNhapHang(3,3,3);
+    // Soluong::myphamNoi = Soluong::myphamNoi + 1;
+    // list1[2].setMaHang("ma hang1");
+    // list1[2].setTenHang("ten hang1");
+    // list1[2].setCongDung("cong dung1");
+    // list1[2].setSoluong(33301);
+    // list1[2].setTrigia(333.331);
+    // list1[2].setNgayNhapHang(3,3,3);
+    // Soluong::myphamNoi = Soluong::myphamNoi + 1;
+    // list1->ghiFile(list1, Soluong::myphamNoi);
+    // cout << Soluong::myphamNoi <<endl;
+    while(1){
+        if(menu(list1, list2, nguoimua1, nguoimua2, nv) == 0){
+            break;
+        }
+    }
     return 0;
 }
