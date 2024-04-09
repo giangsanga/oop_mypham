@@ -1197,7 +1197,7 @@ void menuThemKh(khachHangThuong nguoimua1[], khachHangVip nguoimua2[]){
             case 2:{
                 nguoimua2[Soluong::KhachVip].setThongtin();
                 Soluong::KhachVip++;
-                nguoimua2->ghiFile(nguoimua2, Soluong::KhachVip);
+                // nguoimua2->ghiFile(nguoimua2, Soluong::KhachVip);
                 break;
             }
         } 
@@ -1275,9 +1275,12 @@ int main(){
     nhanvien* nv = new nhanvien[50];
     list1->docFile(list1);
     list2->docFile(list2);
-    Soluong::Nhanvien = 0;
-    Soluong::KhachVip = 0;
-    Soluong::KhachThuong = 0;
+    nguoimua1->docFile(nguoimua1);
+    nguoimua2->docFile(nguoimua2);
+    nv->docFile(nv);
+    Soluong::Nhanvien = nv->kiemTraTxt();
+    Soluong::KhachVip = nguoimua2->kiemTraTxt();
+    Soluong::KhachThuong = nguoimua1->kiemTraTxt();
     Soluong::myphamNoi = list1->kiemTraTxt();
     Soluong::myphamNgoai = list2->kiemTraTxt();
     // list1[0].setMaHang("ma hang");
