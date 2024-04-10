@@ -544,6 +544,7 @@ class nguoi{
     }
     void setHovaTen(){
         cout << "Nhap ho va ten: ";
+        cin.ignore();
         getline(cin, hoVaTen);
     }
     void setHovaTen(string HvT){
@@ -618,7 +619,13 @@ class khachHangThuong : public nguoi{
         setNgaymua();
         setSoHangdaMua();
     }
-    void chinhSua(){
+    void chinhSua(khachHangThuong khachhang[]){
+        int n = kiemTraTxt();
+        cout << "Nhap so dien thoai de sua thong tin\n";
+        string sdt;
+        cin.ignore();
+        getline(cin,sdt);
+        int vitri = timKiem(khachhang, sdt, n);
         cout << "1. Chinh sua tat ca thong tin;\n";
         cout << "2. Chinh sua Ho va Ten;\n";
         cout << "3. Chinh sua ngay sinh\n";
@@ -630,28 +637,31 @@ class khachHangThuong : public nguoi{
         cin >> choice;
         switch(choice){
             case 1: {
-                setHovaTen();
-                setSoDienthoai();
-                setSoHangdaMua();
+                // khachhang[vitri].setHovaTen();
+                // khachhang[vitri].setNgaysinh();
+                // khachhang[vitri].setSoDienthoai();         
+                // khachhang[vitri].setSoHangdaMua();
+                // khachhang[vitri].setNgaymua();
+                khachhang[vitri].setThongtin();
                 break;
             }
             case 2:{
-                setHovaTen();
+                khachhang[vitri].setHovaTen();
                 break;
             }
             case 3:{
-                setNgaysinh();
+                khachhang[vitri].setNgaysinh();
             }
             case 4:{
-                setSoDienthoai();
+                khachhang[vitri].setSoDienthoai();
                 break;
             }
             case 5:{
-                setSoHangdaMua();
+                khachhang[vitri].setSoHangdaMua();
                 break;
             }
             case 6:{
-                setNgaymua();
+                khachhang[vitri].setNgaymua();
             }
             default:
             break;
@@ -1383,7 +1393,26 @@ void menuXoaKh(khachHangThuong nguoimua1[], khachHangVip nguoimua2[]){
     }while(exit == 1);
 }
 void menuChinhsuaKh(khachHangThuong nguoimua1[], khachHangVip nguoimua2[]){
-
+    int exit;
+    do{
+        cout << "1. Chinh sua thong tin khach hang thuong;\n" << "2. Chinh sua thong tin khach hang vip.\n";
+        int choice;
+        cin >> choice;
+        switch(choice){
+            case 1:{
+                nguoimua1[Soluong::KhachThuong].chinhSua(nguoimua1);
+                nguoimua1->ghiFile(nguoimua1, Soluong::KhachThuong);
+                break;
+            }
+            case 2:{
+                nguoimua2[Soluong::KhachVip].chinhSua();
+                nguoimua2->ghiFile(nguoimua2, Soluong::KhachVip);
+                break;
+            }
+        } 
+        cout << "Muon tiep tuc xoa ?\n" << "Chon 0 de exit, 1 de tiep tuc: ";
+        cin >> exit;
+    }while(exit == 1);
 }
 void menuQuanlyKhachhang(khachHangThuong nguoimua1[], khachHangVip nguoimua2[]){
     cout << "1. Them thong tin khach hang;\n" 
