@@ -282,6 +282,26 @@ class myphamNoi : public hangNoidia{
             file.close();
         }
     }
+    int timKiem(myphamNoi sanpham[], string mahang, int n){//Tìm kiếm sản phẩm nằm ở phần tử số bao nhiêu trong mảng sanpham[];
+        for(int i = 0; i < n; i++){
+            if(sanpham[i].getMahang() == mahang) return i;
+        }
+    }
+    void Xoa(myphamNoi sanpham[]){//Ham xoa thong tin
+        int n = kiemTraTxt();
+        cout << "Nhap ma hang can xoa! Ma hang: ";
+        string mahang;
+        cin.ignore(); // Xóa bộ đệm đầu vào
+        getline(cin, mahang);
+        int vitriXoa = timKiem(sanpham, mahang, n);
+        for(int i = vitriXoa; i < n - 1; i++){
+            sanpham[i] = sanpham[i+1];
+        }
+        cout << "Da xoa thanh cong!";
+        int sosanpham = n - 1;
+        ghiFile(sanpham, sosanpham);
+        int choice;
+    }
 };
 class myphamNgoai : public hangNgoaidia{
     private:
@@ -483,6 +503,26 @@ class myphamNgoai : public hangNgoaidia{
             }
             file.close();
         }
+    }
+    int timKiem(myphamNgoai sanpham[], string mahang, int n){//Tìm kiếm sản phẩm nằm ở phần tử số bao nhiêu trong mảng sanpham[];
+    for(int i = 0; i < n; i++){
+        if(sanpham[i].getMahang() == mahang) return i;
+    }
+}
+    void Xoa(myphamNgoai sanpham[]){//Ham xoa thong tin
+        int n = kiemTraTxt();
+        cout << "Nhap ma hang can xoa! Ma hang: ";
+        string mahang;
+        cin.ignore(); // Xóa bộ đệm đầu vào
+        getline(cin, mahang);
+        int vitriXoa = timKiem(sanpham, mahang, n);
+        for(int i = vitriXoa; i < n - 1; i++){
+            sanpham[i] = sanpham[i+1];
+        }
+        cout << "Da xoa thanh cong!";
+        int sosanpham = n - 1;
+        ghiFile(sanpham, sosanpham);
+        int choice;
     }
 };
 
@@ -739,6 +779,26 @@ class khachHangThuong : public nguoi{
             }
             file.close();
         }
+    }
+    int timKiem(khachHangThuong khachhang[], string sdt, int n){//Tìm kiếm sản phẩm nằm ở phần tử số bao nhiêu trong mảng sanpham[];
+        for(int i = 0; i < n; i++){
+            if(khachhang[i].getsoDienthoai() == sdt) return i;
+        }
+    }
+    void Xoa(khachHangThuong khachhang[]){//Ham xoa thong tin
+        int n = kiemTraTxt();
+        cout << "Nhap so dien thoai de xoa thong tin khach hang can xoa! do dien thoai: ";
+        string sdt;
+        cin.ignore(); // Xóa bộ đệm đầu vào
+        getline(cin, sdt);
+        int vitriXoa = timKiem(khachhang, sdt, n);
+        for(int i = vitriXoa; i < n - 1; i++){
+            khachhang[i] = khachhang[i+1];
+        }
+        cout << "Da xoa thanh cong!";
+        int sokhach = n - 1;
+        ghiFile(khachhang, sokhach);
+        int choice;
     }
 };
 class khachHangVip : public nguoi{
@@ -1038,6 +1098,26 @@ class khachHangVip : public nguoi{
             file.close();
         }
     }
+    int timKiem(khachHangVip khachhang[], string sdt, int n){//Tìm kiếm sản phẩm nằm ở phần tử số bao nhiêu trong mảng sanpham[];
+        for(int i = 0; i < n; i++){
+            if(khachhang[i].getIDkhachVip() == sdt) return i;
+        }
+    }
+    void Xoa(khachHangVip khachhang[]){//Ham xoa thong tin
+        int n = kiemTraTxt();
+        cout << "Nhap ID de xoa thong tin khach hang can xoa! ID: ";
+        string id;
+        cin.ignore(); // Xóa bộ đệm đầu vào
+        getline(cin, id);
+        int vitriXoa = timKiem(khachhang, id, n);
+        for(int i = vitriXoa; i < n - 1; i++){
+            khachhang[i] = khachhang[i+1];
+        }
+        cout << "Da xoa thanh cong!";
+        int sokhach = n - 1;
+        ghiFile(khachhang, sokhach);
+        int choice;
+    }
 };
 class nhanvien : public nguoi{
     string maNhanvien;
@@ -1148,10 +1228,52 @@ void menuThemSp(myphamNoi list1[], myphamNgoai list2[]){
     }while(exit == 1);
 }
 void menuXoaSp(myphamNoi list1[], myphamNgoai list2[]){
-
+    int exit = 1;
+    do{
+        cout << "1. Xoa my pham noi;\n" << "2. Xoa my pham ngoai.\n";
+        int choice;
+        cin >> choice;
+        switch(choice){
+            case 1:{
+                list1[Soluong::myphamNoi].Xoa(list1);
+                Soluong::myphamNoi--;
+                list1->ghiFile(list1, Soluong::myphamNoi);
+                break;
+            }
+            case 2:{
+                list2[Soluong::myphamNgoai].Xoa(list2);
+                Soluong::myphamNgoai--;
+                list2->ghiFile(list2, Soluong::myphamNgoai);
+                break;
+            }
+        } 
+        cout << "Muon tiep tuc them ?\n" << "Chon 0 de exit, 1 de tiep tuc: ";
+        cin >> exit;
+    }while(exit == 1);
 }
 void menuChinhsuaSp(myphamNoi list1[], myphamNgoai list2[]){
-
+    int exit = 1;
+    do{
+        cout << "1. Xoa my pham noi;\n" << "2. Xoa my pham ngoai.\n";
+        int choice;
+        cin >> choice;
+        switch(choice){
+            case 1:{
+                list1[Soluong::myphamNoi].Xoa(list1);
+                Soluong::myphamNoi--;
+                list1->ghiFile(list1, Soluong::myphamNoi);
+                break;
+            }
+            case 2:{
+                list2[Soluong::myphamNgoai].Xoa(list2);
+                Soluong::myphamNgoai--;
+                list2->ghiFile(list2, Soluong::myphamNgoai);
+                break;
+            }
+        } 
+        cout << "Muon tiep tuc them ?\n" << "Chon 0 de exit, 1 de tiep tuc: ";
+        cin >> exit;
+    }while(exit == 1);
 }
 void menuQuanlySp(myphamNoi list1[], myphamNgoai list2[]){
     cout << "1. Them san pham;\n" 
@@ -1237,7 +1359,28 @@ void menuThemKh(khachHangThuong nguoimua1[], khachHangVip nguoimua2[]){
     }while(exit == 1);
 }
 void menuXoaKh(khachHangThuong nguoimua1[], khachHangVip nguoimua2[]){
-
+    int exit;
+    do{
+        cout << "1. Xoa thong tin khach hang thuong;\n" << "2. Xoa thong tin khach hang vip.\n";
+        int choice;
+        cin >> choice;
+        switch(choice){
+            case 1:{
+                nguoimua1[Soluong::KhachThuong].Xoa(nguoimua1);
+                Soluong::KhachThuong--;
+                nguoimua1->ghiFile(nguoimua1, Soluong::KhachThuong);
+                break;
+            }
+            case 2:{
+                nguoimua2[Soluong::KhachVip].Xoa(nguoimua2);
+                Soluong::KhachVip--;
+                nguoimua2->ghiFile(nguoimua2, Soluong::KhachVip);
+                break;
+            }
+        } 
+        cout << "Muon tiep tuc xoa ?\n" << "Chon 0 de exit, 1 de tiep tuc: ";
+        cin >> exit;
+    }while(exit == 1);
 }
 void menuChinhsuaKh(khachHangThuong nguoimua1[], khachHangVip nguoimua2[]){
 
