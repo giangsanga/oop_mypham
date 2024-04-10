@@ -570,8 +570,10 @@ class khachHangThuong : public nguoi{
         return soHangdaMua;
     }
     void setThongtin(){
+        cin.ignore();
         setHovaTen();
         setNgaysinh();
+        cin.ignore();
         setSoDienthoai();
         setNgaymua();
         setSoHangdaMua();
@@ -722,15 +724,15 @@ class khachHangThuong : public nguoi{
                 nam = stoi(line.substr(5));
                 khachhang[i].setNgaysinh(ngay, thang, nam);
                 getline(file,line);
-                khachhang[i].setSoHangdaMua(stof(line.substr(9)));
+                khachhang[i].setSoHangdaMua(stoi(line.substr(19)));
                 getline(file,line);
-                int ngay;
+                ngay;
                 ngay = stoi(line.substr(6));
                 getline(file,line);
-                int thang;
+                thang;
                 thang = stoi(line.substr(7));
                 getline(file,line);
-                int nam;
+                nam;
                 nam = stoi(line.substr(5));
                 khachhang[i].setNgaymua(ngay, thang, nam);     
                 i++;
@@ -824,9 +826,11 @@ class khachHangVip : public nguoi{
         cout << "Noi o";
     }
     void setThongtin(){
+        cin.ignore();
         setIDkhachVip();
         setHovaTen();
         setNgaysinh();
+        cin.ignore();
         setSoDienthoai();
         setNgayThamgia();
         setPhantramGiamgia();
@@ -933,11 +937,19 @@ class khachHangVip : public nguoi{
         while(getline(file, line)){
             n++;
         }
-        n = n/9;
+        n = n/14;
         return n;
         file.close();
     }
-    void ghiFile(khachHangThuong khachhang[], int soluongkhachhang){
+                //         setIDkhachVip();
+            // setHovaTen();
+            // setNgaysinh();
+            // setSoDienthoai();
+            // setNgayThamgia();
+            // setPhantramGiamgia();
+            // setSoSanphamdaMua();
+            // setNgaymua();
+    void ghiFile(khachHangVip khachhang[], int soluongkhachhang){
         // int n = kiemTraTxt();
         while(1){
             ifstream infile(f_txt);
@@ -946,12 +958,17 @@ class khachHangVip : public nguoi{
                 // File tồn tại, thực hiện thao tác
                 ofstream fout(f_txt);
                 for(int i = 0; i < soluongkhachhang; i++){
+                    fout <<"ID: "<< khachhang[i].getIDkhachVip()<<endl;
                     fout <<"Ho va ten: "<< khachhang[i].getHovaTen() << endl;
                     fout <<"So dien thoai: " << khachhang[i].getsoDienthoai() << endl;
-                    fout <<"Ngay sinh: "<<khachhang[i].getNgaySinh().ngay << endl;
-                    fout <<"Thang: "<<khachhang[i].getNgaySinh().thang << endl;
-                    fout <<"Nam: "<<khachhang[i].getNgaySinh().nam << endl; 
-                    fout <<"So san pham da mua " << khachhang[i].getSoHangdaMua() << endl;
+                    fout <<"Ngay sinh: " <<khachhang[i].getNgaySinh().ngay << endl;
+                    fout <<"Thang: " <<khachhang[i].getNgaySinh().thang << endl;
+                    fout <<"Nam: " <<khachhang[i].getNgaySinh().nam << endl;
+                    fout <<"Ngay tham gia: "<<khachhang[i].getNgayThamgia().ngay << endl;
+                    fout <<"Thang: "<<khachhang[i].getNgayThamgia().thang << endl;
+                    fout <<"Nam: "<<khachhang[i].getNgayThamgia().nam << endl; 
+                    fout <<"So san pham da mua: " << khachhang[i].getSoSanphamdaMua() << endl;
+                    fout <<"Phan tram giam gia: " << khachhang[i].getPhantramGiamgia() << endl;
                     fout <<"Ngay: " <<khachhang[i].getNgaymua().ngay << endl;
                     fout <<"Thang: " <<khachhang[i].getNgaymua().thang << endl;
                     fout <<"Nam: " <<khachhang[i].getNgaymua().nam << endl;
@@ -968,7 +985,7 @@ class khachHangVip : public nguoi{
         }
 
     }
-    void docFile(khachHangThuong khachhang[]){
+    void docFile(khachHangVip khachhang[]){
         ifstream file(f_txt);
         if(file.is_open()){
             int n = kiemTraTxt();
@@ -976,6 +993,8 @@ class khachHangVip : public nguoi{
             string line;
             int i = 0;
             while(n != 0 && i < n){
+                getline(file,line);
+                khachhang[i].setIDkhachVip(line.substr(4));
                 getline(file,line);
                 khachhang[i].setHovaTen(line.substr(11));
                 getline(file,line);
@@ -991,17 +1010,29 @@ class khachHangVip : public nguoi{
                 nam = stoi(line.substr(5));
                 khachhang[i].setNgaysinh(ngay, thang, nam);
                 getline(file,line);
-                khachhang[i].setSoHangdaMua(stof(line.substr(9)));
+                ngay;
+                ngay = stoi(line.substr(15));
                 getline(file,line);
-                int ngay;
-                ngay = stoi(line.substr(6));
-                getline(file,line);
-                int thang;
+                thang;
                 thang = stoi(line.substr(7));
                 getline(file,line);
-                int nam;
+                nam;
                 nam = stoi(line.substr(5));
-                khachhang[i].setNgaymua(ngay, thang, nam);     
+                khachhang[i].setNgayThamgia(ngay, thang, nam);
+                getline(file,line);
+                khachhang[i].setSoSanphamdaMua(stoi(line.substr(20)));
+                getline(file,line);
+                khachhang[i].setPhantramGiamgia(stoi(line.substr(20)));
+                getline(file,line);
+                ngay;
+                ngay = stoi(line.substr(6));
+                getline(file,line);
+                thang;
+                thang = stoi(line.substr(7));
+                getline(file,line);
+                nam;
+                nam = stoi(line.substr(5));
+                khachhang[i].setNgaymua(ngay, thang, nam);
                 i++;
             }
             file.close();
@@ -1197,7 +1228,7 @@ void menuThemKh(khachHangThuong nguoimua1[], khachHangVip nguoimua2[]){
             case 2:{
                 nguoimua2[Soluong::KhachVip].setThongtin();
                 Soluong::KhachVip++;
-                // nguoimua2->ghiFile(nguoimua2, Soluong::KhachVip);
+                nguoimua2->ghiFile(nguoimua2, Soluong::KhachVip);
                 break;
             }
         } 
@@ -1277,8 +1308,8 @@ int main(){
     list2->docFile(list2);
     nguoimua1->docFile(nguoimua1);
     nguoimua2->docFile(nguoimua2);
-    nv->docFile(nv);
-    Soluong::Nhanvien = nv->kiemTraTxt();
+    // nv->docFile(nv);
+    // Soluong::Nhanvien = nv->kiemTraTxt();
     Soluong::KhachVip = nguoimua2->kiemTraTxt();
     Soluong::KhachThuong = nguoimua1->kiemTraTxt();
     Soluong::myphamNoi = list1->kiemTraTxt();
