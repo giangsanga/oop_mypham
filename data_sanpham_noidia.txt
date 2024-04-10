@@ -1,0 +1,48 @@
+Ma hang: haha
+Ten hang: ehe
+Cong dung: hihi
+Tri gia: 222
+So luong: 22
+Ngay: 2
+Thang: 2
+Nam: 2
+Ma hang: huhu
+Ten hang: lhl
+Cong dung: hrhr
+Tri gia: 3
+So luong: 3
+Ngay: 3
+Thang: 3
+Nam: 3
+Ma hang: ehhe
+Ten hang: hhe
+Cong dung: ho
+Tri gia: 4
+So luong: 4
+Ngay: 4
+Thang: 4
+Nam: 4
+Ma hang: hehe
+Ten hang: ehe
+Cong dung: hehe
+Tri gia: 3
+So luong: 3
+Ngay: 3
+Thang: 3
+Nam: 3
+Ma hang: hehe
+Ten hang: ehe
+Cong dung: hehe
+Tri gia: 2
+So luong: 2
+Ngay: 3
+Thang: 3
+Nam: 3
+Ma hang: haha
+Ten hang: hehe
+Cong dung: haha
+Tri gia: 2
+So luong: 3
+Ngay: 4
+Thang: 5
+Nam: 6
