@@ -1,0 +1,30 @@
+Ma hang: hehe
+Ten hang: heh heh
+Cong dung: ahah
+Tri gia: 2
+So luong: 2
+Ngay: 2
+Thang: 2
+Nam: 2
+Thue nhap khau: 2
+Nguon goc: 
+Ma hang: haha
+Ten hang: hehe hehe
+Cong dung: hihi hihi
+Tri gia: 789.987
+So luong: 888
+Ngay: 3
+Thang: 4
+Nam: 5
+Thue nhap khau: 10
+Nguon goc: My
+Ma hang: hehe
+Ten hang: hooho hoho
+Cong dung: hrhr rhrhehehe 
+Tri gia: 3
+So luong: 3
+Ngay: 3
+Thang: 3
+Nam: 3
+Thue nhap khau: 3
+Nguon goc: china
