@@ -156,54 +156,65 @@ class myphamNoi : public hangNoidia{
         cout << "Tri gia: VND" << getTriGia() << endl;
         cout << "So luong: " << getSoluong() << endl;
     }
-    void suaThongtin(){
-        int choice;
-        cout << "Can sua thong tin gi: \n";
-        cout << "1. Tat ca;\n"
-        << "2. Ma hang;\n" 
-        << "3. Ten hang;\n" 
-        << "4. Cong dung;\n" 
-        << "5. Tri gia;\n" 
-        << "6. So luong;\n"
-        << "7. Ngay nhap hang.";
-        cout << "Chon: ";
-        cin >> choice;
-        switch(choice){
-            case 1:{
-                setMaHang();
-                setTenHang();
-                setCongDung();
-                setTrigia();
-                setSoluong();
-                setNgayNhapHang();
+    void suaThongtin(myphamNoi sanpham[]){
+        int n = kiemTraTxt();
+        cout << "Nhap ma hang can chinh! Ma hang: ";
+        string mahang;
+        cin.ignore(); // Xóa bộ đệm đầu vào
+        getline(cin, mahang);
+        int vitrisua = timKiem(sanpham, mahang, n);
+        if(vitrisua == -1){
+            cout << "Khong tim thay san pham!!!\n";
+        }else{
+            int choice;
+            cout << "Can sua thong tin gi: \n";
+            cout << "1. Tat ca;\n"
+            << "2. Ma hang;\n" 
+            << "3. Ten hang;\n" 
+            << "4. Cong dung;\n" 
+            << "5. Tri gia;\n" 
+            << "6. So luong;\n"
+            << "7. Ngay nhap hang.\n";
+            cout << "Chon: ";
+            cin >> choice;
+            cin.ignore();//Xoa bo dem dau vao
+            switch(choice){
+                case 1:{
+                    setMaHang();
+                    setTenHang();
+                    setCongDung();
+                    setTrigia();
+                    setSoluong();
+                    setNgayNhapHang();
+                    break;
+                }
+                case 2:{
+                    setMaHang();
+                    break;
+                }
+                case 3:{
+                    setTenHang();
+                    break;
+                }
+                case 4:{
+                    setCongDung();
+                    break;
+                }
+                case 5:{
+                    setTrigia();
+                    break;
+                }
+                case 6:{
+                    setSoluong();
+                    break;
+                }
+                case 7:{
+                    setNgayNhapHang();
+                    break;
+                }
+                default:
                 break;
             }
-            case 2:{
-                setMaHang();
-                break;
-            }
-            case 3:{
-                setTenHang();
-                break;
-            }
-            case 4:{
-                setCongDung();
-                break;
-            }
-            case 5:{
-                setTrigia();
-                break;
-            }
-            case 6:{
-                setSoluong();
-                break;
-            }
-            case 7:{
-                setNgayNhapHang();
-                break;
-            }
-            default:
-            break;
         }
     }
     ///////
@@ -294,13 +305,16 @@ class myphamNoi : public hangNoidia{
         cin.ignore(); // Xóa bộ đệm đầu vào
         getline(cin, mahang);
         int vitriXoa = timKiem(sanpham, mahang, n);
-        for(int i = vitriXoa; i < n - 1; i++){
-            sanpham[i] = sanpham[i+1];
+        if(vitriXoa == -1){
+            cout << "Khong tim thay san pham!!!\n";
+        }else{
+            for(int i = vitriXoa; i < n - 1; i++){
+                sanpham[i] = sanpham[i+1];
+            }
+            cout << "Da xoa thanh cong!\n";
+            int sosanpham = n - 1;
+            ghiFile(sanpham, sosanpham);
         }
-        cout << "Da xoa thanh cong!\n";
-        int sosanpham = n - 1;
-        ghiFile(sanpham, sosanpham);
-        int choice;
     }
 };
 class myphamNgoai : public hangNgoaidia{
@@ -360,66 +374,76 @@ class myphamNgoai : public hangNgoaidia{
         cout << "So luong: " << getSoluong() << endl;
         cout << "Thue nhap khau: "<< getThueNhapkhau() <<endl;
     }
-    void suaThongtin(){
-        int choice;
-        cout << "Can sua thong tin gi: \n";
-        cout << "1. Tat ca;\n"
-        << "2. Ma hang;\n" 
-        << "3. Ten hang;\n"
-        << "4. Nguon goc;\n" 
-        << "5. Cong dung;\n" 
-        << "6. Tri gia;\n" 
-        << "7. So luong;\n" 
-        <<"8. Thue;\n"
-        <<"9. Ngay nhap hang;";
-        cout << "Chon: ";
-        cin >> choice;
-        switch(choice){
-            case 1:{
-                setMaHang();
-                setTenHang();
-                setNguongoc();
-                setCongDung();
-                setTrigia();
-                setSoluong();
-                setThueNhapkhau();
-                setNgayNhapHang();
+    void suaThongtin(myphamNgoai sanpham[]){
+        int n = kiemTraTxt();
+        cout << "Nhap ma hang can chinh! Ma hang: ";
+        string mahang;
+        cin.ignore(); // Xóa bộ đệm đầu vào
+        getline(cin, mahang);
+        int vitrisua = timKiem(sanpham, mahang, n);
+        if(vitrisua == -1){
+            cout << "Khong tim thay san pham!!!\n";
+        }else{
+            int choice;
+            cout << "Can sua thong tin gi: \n";
+            cout << "1. Tat ca;\n"
+            << "2. Ma hang;\n" 
+            << "3. Ten hang;\n"
+            << "4. Nguon goc;\n" 
+            << "5. Cong dung;\n" 
+            << "6. Tri gia;\n" 
+            << "7. So luong;\n" 
+            <<"8. Thue;\n"
+            <<"9. Ngay nhap hang;";
+            cout << "Chon: ";
+            cin >> choice;
+            switch(choice){
+                case 1:{
+                    setMaHang();
+                    setTenHang();
+                    setNguongoc();
+                    setCongDung();
+                    setTrigia();
+                    setSoluong();
+                    setThueNhapkhau();
+                    setNgayNhapHang();
+                    break;
+                }
+                case 2:{
+                    setMaHang();
+                    break;
+                }
+                case 3:{
+                    setTenHang();
+                    break;
+                }
+                case 4:{
+                    setNguongoc();
+                    break;
+                }
+                case 5:{
+                    setCongDung();
+                    break;
+                }
+                case 6:{
+                    setTrigia();
+                    break;
+                }
+                case 7:{
+                    setSoluong();
+                    break;
+                }
+                case 8:{
+                    setThueNhapkhau();
+                    break;
+                }
+                case 9:{
+                    setNgayNhapHang();
+                    break;
+                }
+                default:
                 break;
             }
-            case 2:{
-                setMaHang();
-                break;
-            }
-            case 3:{
-                setTenHang();
-                break;
-            }
-            case 4:{
-                setNguongoc();
-                break;
-            }
-            case 5:{
-                setCongDung();
-                break;
-            }
-            case 6:{
-                setTrigia();
-                break;
-            }
-            case 7:{
-                setSoluong();
-                break;
-            }
-            case 8:{
-                setThueNhapkhau();
-                break;
-            }
-            case 9:{
-                setNgayNhapHang();
-                break;
-            }
-            default:
-            break;
         }
     }
     ///////
@@ -517,13 +541,16 @@ class myphamNgoai : public hangNgoaidia{
         cin.ignore(); // Xóa bộ đệm đầu vào
         getline(cin, mahang);
         int vitriXoa = timKiem(sanpham, mahang, n);
-        for(int i = vitriXoa; i < n - 1; i++){
-            sanpham[i] = sanpham[i+1];
+        if(vitriXoa == -1){
+            cout << "Khong tim thay san pham!!!\n";
+        }else{
+            for(int i = vitriXoa; i < n - 1; i++){
+                sanpham[i] = sanpham[i+1];
+            }
+            cout << "Da xoa thanh cong!\n";
+            int sosanpham = n - 1;
+            ghiFile(sanpham, sosanpham);
         }
-        cout << "Da xoa thanh cong!\n";
-        int sosanpham = n - 1;
-        ghiFile(sanpham, sosanpham);
-        int choice;
     }
 };
 
@@ -626,40 +653,45 @@ class khachHangThuong : public nguoi{
         cin.ignore();
         getline(cin,sdt);
         int vitri = timKiem(khachhang, sdt, n);
-        cout << "1. Chinh sua tat ca thong tin;\n";
-        cout << "2. Chinh sua Ho va Ten;\n";
-        cout << "3. Chinh sua ngay sinh\n";
-        cout << "4. Chinh sua so dien thoai;\n";
-        cout << "5. Chinh sua so diem tich luy;\n";
-        cout << "6. Ngay mua gan nhat.\n";
-        cout << "Chon: ";
-        int choice;
-        cin >> choice;
-        switch(choice){
-            case 1: {
-                khachhang[vitri].setThongtin();
+        if(vitri == -1){
+            cout << "Khong tim thay khach hang!!!\n";
+        }else{
+            cout << "Chon thong tin can chinh sua: \n";
+            cout << "1. Chinh sua tat ca thong tin;\n";
+            cout << "2. Chinh sua Ho va Ten;\n";
+            cout << "3. Chinh sua ngay sinh\n";
+            cout << "4. Chinh sua so dien thoai;\n";
+            cout << "5. Chinh sua so diem tich luy;\n";
+            cout << "6. Ngay mua gan nhat.\n";
+            cout << "Chon: ";
+            int choice;
+            cin >> choice;
+            switch(choice){
+                case 1: {
+                    khachhang[vitri].setThongtin();
+                    break;
+                }
+                case 2:{
+                    khachhang[vitri].setHovaTen();
+                    break;
+                }
+                case 3:{
+                    khachhang[vitri].setNgaysinh();
+                }
+                case 4:{
+                    khachhang[vitri].setSoDienthoai();
+                    break;
+                }
+                case 5:{
+                    khachhang[vitri].setDiemtichluy();
+                    break;
+                }
+                case 6:{
+                    khachhang[vitri].setNgaymua();
+                }
+                default:
                 break;
             }
-            case 2:{
-                khachhang[vitri].setHovaTen();
-                break;
-            }
-            case 3:{
-                khachhang[vitri].setNgaysinh();
-            }
-            case 4:{
-                khachhang[vitri].setSoDienthoai();
-                break;
-            }
-            case 5:{
-                khachhang[vitri].setDiemtichluy();
-                break;
-            }
-            case 6:{
-                khachhang[vitri].setNgaymua();
-            }
-            default:
-            break;
         }
     }
     // float thanhToan(float giatri, int soluong){
@@ -739,27 +771,18 @@ class khachHangThuong : public nguoi{
                                 // break;
                             }
                         }
-                        thanhtien = thanhtien + total*giamgia;
+                        thanhtien = thanhtien + total;
                         cout << "Nhap 0 de ket thuc thanh toan cho khach hang " << khach[vitri].getHovaTen()
                         << "\nNhap 1 de tiep tuc thanh toan\n";
                         int choice;
                         cin >> choice;
                         if (choice == 0) {
                             exit = 1;
-                            if( thanhtien >= 500000 && thanhtien < 1000000){
-                                giamgia  = 0.85; //giam 15%
-                            }else if (thanhtien >= 1000000 && thanhtien < 2000000){
-                                giamgia = 0.8 ;// giam 20%
-                            }else if (thanhtien >= 2000000){
-                                giamgia = 0.7; // giam 30%
-                            }
-                            cout << "Tong tien: " << thanhtien*giamgia <<" VND"<<endl;
-                            ///////////////////
+                            cout << "Tong tien: " << thanhtien<<" VND"<<endl;
                             cout << "Nhan phim bat ky de ket thuc!!!";
                             cin.ignore();
                             cin.get();
-                            ////////////////
-                            break;// này là break vòng while hả// đsung k, ddr may
+                            break;
                         }
                         else{
                             continue;
@@ -865,13 +888,16 @@ class khachHangThuong : public nguoi{
         cin.ignore(); // Xóa bộ đệm đầu vào
         getline(cin, sdt);
         int vitriXoa = timKiem(khachhang, sdt, n);
-        for(int i = vitriXoa; i < n - 1; i++){
-            khachhang[i] = khachhang[i+1];
+        if(vitriXoa == -1){
+            cout << "Khong tim thay khach hang!!!\n";
+        }else{
+            for(int i = vitriXoa; i < n - 1; i++){
+                khachhang[i] = khachhang[i+1];
+            }
+            cout << "Da xoa thanh cong!\n";
+            int sokhach = n - 1;
+            ghiFile(khachhang, sokhach);
         }
-        cout << "Da xoa thanh cong!\n";
-        int sokhach = n - 1;
-        ghiFile(khachhang, sokhach);
-        int choice;
     }
 };
 class khachHangVip : public nguoi{
@@ -981,60 +1007,65 @@ class khachHangVip : public nguoi{
         cin.ignore();
         getline(cin,id);
         int vitri = timKiem(khachhang, id, n);
-        cout << "1. Chinh sua tat ca thong tin;\n";
-        cout << "2. Chinh sua ID;\n";
-        cout << "3. Chinh sua Ho va Ten;\n";
-        cout << "4. Chinh sua ngay sinh;";
-        cout << "5. Chinh sua so dien thoai;\n";
-        cout << "6. Chinh sua ngay tham gia\n";
-        cout << "7. Chinh sua pham tram giam gia;\n";
-        cout << "8. Chinh sua diem tich luy.\n";
-        cout << "Chon: ";
-        int choice;
-        cin >> choice;
-        switch(choice){
-            case 1: {
-                setIDkhachVip();
-                setHovaTen();
-                setSoDienthoai();
-                setNgayThamgia();
-                setPhantramGiamgia();
-                setDiemtichluy();
+        if(vitri == -1){
+            cout << "Khong tim thay khach hang!!!\n";
+        }else{
+            cout << "Chon thong tin can chinh sua: \n";
+            cout << "1. Chinh sua tat ca thong tin;\n";
+            cout << "2. Chinh sua ID;\n";
+            cout << "3. Chinh sua Ho va Ten;\n";
+            cout << "4. Chinh sua ngay sinh;";
+            cout << "5. Chinh sua so dien thoai;\n";
+            cout << "6. Chinh sua ngay tham gia\n";
+            cout << "7. Chinh sua pham tram giam gia;\n";
+            cout << "8. Chinh sua diem tich luy.\n";
+            cout << "Chon: ";
+            int choice;
+            cin >> choice;
+            switch(choice){
+                case 1: {
+                    setIDkhachVip();
+                    setHovaTen();
+                    setSoDienthoai();
+                    setNgayThamgia();
+                    setPhantramGiamgia();
+                    setDiemtichluy();
+                    break;
+                }
+                case 2:{
+                    setIDkhachVip();
+                    break;
+                }
+                case 3:{
+                    setHovaTen();
+                    break;
+                }
+                case 4:{
+                    setNgaysinh();
+                    break;
+                }
+                case 5:{
+                    setSoDienthoai();
+                    break;
+                }
+                case 6:{
+                    setNgayThamgia();
+                    break;
+                }
+                case 7:{
+                    setPhantramGiamgia();
+                    break;
+                }
+                case 8:{
+                    setDiemtichluy();
+                    break;
+                }
+                case 9:{
+                    setNgaymua();
+                }
+                default:
                 break;
             }
-            case 2:{
-                setIDkhachVip();
-                break;
-            }
-            case 3:{
-                setHovaTen();
-                break;
-            }
-            case 4:{
-                setNgaysinh();
-                break;
-            }
-            case 5:{
-                setSoDienthoai();
-                break;
-            }
-            case 6:{
-                setNgayThamgia();
-                break;
-            }
-            case 7:{
-                setPhantramGiamgia();
-                break;
-            }
-            case 8:{
-                setDiemtichluy();
-                break;
-            }
-            case 9:{
-                setNgaymua();
-            }
-            default:
-            break;
         }
     }
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -1087,6 +1118,7 @@ class khachHangVip : public nguoi{
                                 cin >> soLuong;     
                                 float giaBan = list1[i].getTriGia();
                                 total += giaBan * soLuong;
+                              
                                 list1[i].setSoluong(list1[i].getSoluong() - soLuong);
                                 list1->ghiFile(list1, slmpnoi);
                                 // break;
@@ -1110,7 +1142,7 @@ class khachHangVip : public nguoi{
                                 // break;
                             }
                         }
-                        thanhtien = thanhtien + total*giamgia;
+                        thanhtien = thanhtien + total;
                         cout << "Nhap 0 de ket thuc thanh toan cho khach hang " << khach[vitri].getHovaTen()
                         << "\nNhap 1 de tiep tuc thanh toan\n";
                         int choice;
@@ -1120,12 +1152,15 @@ class khachHangVip : public nguoi{
                             if( thanhtien >= 500000 && thanhtien < 1000000){
                                 giamgia  = 0.85; //giam 15%
                                 cout << "Giam gia 15%\n";
+                                cout << "Tong tien chua giam gia: " << thanhtien <<" VND"<<endl;
                             }else if (thanhtien >= 1000000 && thanhtien < 2000000){
                                 giamgia = 0.8 ;// giam 20%
                                 cout << "Giam gia 20%\n";
+                                cout << "Tong tien chua giam gia: " << thanhtien <<" VND"<<endl;
                             }else if (thanhtien >= 2000000){
                                 giamgia = 0.7; // giam 30%
                                 cout << "Giam gia 30%\n";
+                                cout << "Tong tien chua giam gia: " << thanhtien <<" VND"<<endl;
                             }
                             cout << "Tong tien: " << thanhtien*giamgia <<" VND"<<endl;
                             ///////////////////
@@ -1258,13 +1293,16 @@ class khachHangVip : public nguoi{
         cin.ignore(); // Xóa bộ đệm đầu vào
         getline(cin, id);
         int vitriXoa = timKiem(khachhang, id, n);
-        for(int i = vitriXoa; i < n - 1; i++){
-            khachhang[i] = khachhang[i+1];
+        if(vitriXoa == -1){
+            cout << "Khong tim thay khach hang!!!\n";
+        }else{
+            for(int i = vitriXoa; i < n - 1; i++){
+                khachhang[i] = khachhang[i+1];
+            }
+            cout << "Da xoa thanh cong!\n";
+            int sokhach = n - 1;
+            ghiFile(khachhang, sokhach);
         }
-        cout << "Da xoa thanh cong!\n";
-        int sokhach = n - 1;
-        ghiFile(khachhang, sokhach);
-        int choice;
     }
 };
 class nhanvien : public nguoi{
@@ -1448,13 +1486,16 @@ class nhanvien : public nguoi{
         cin.ignore(); // Xóa bộ đệm đầu vào
         getline(cin, id);
         int vitriXoa = timKiem(nv, id, n);
-        for(int i = vitriXoa; i < n - 1; i++){
-            nv[i] = nv[i+1];
+        if(vitriXoa == -1){
+            cout << "Khong tim thay nhan vien!!!\n";
+        }else{
+            for(int i = vitriXoa; i < n - 1; i++){
+                nv[i] = nv[i+1];
+            }
+            cout << "Da xoa thanh cong!\n";
+            int sonhanvien = n - 1;
+            ghiFile(nv, sonhanvien);
         }
-        cout << "Da xoa thanh cong!\n";
-        int sonhanvien = n - 1;
-        ghiFile(nv, sonhanvien);
-        int choice;
     }
     void chinhSua(nhanvien nv[]){
         int n = kiemTraTxt();
@@ -1463,64 +1504,69 @@ class nhanvien : public nguoi{
         cin.ignore();
         getline(cin,id);
         int vitri = timKiem(nv, id, n);
-        cout << "1. Chinh sua tat ca thong tin;\n";
-        cout << "2. Chinh sua Ma nhan vien;\n";
-        cout << "3. Chinh sua Ho va Ten;\n";
-        cout << "4. Chinh sua ngay sinh;";
-        cout << "5. Chinh sua so dien thoai;\n";
-        cout << "6. Chinh sua chuc vu\n";
-        cout << "7. Chinh sua ngay vao lam;\n";
-        cout << "8. Chinh sua noi o;\n";
-        cout << "9. Chinh sua luong;\n";
-        cout << "Chon: ";
-        int choice;
-        cin >> choice;
-        switch(choice){
-            case 1: {
-                setMaNhanvien();
-                setHovaTen();
-                setNgaysinh();
-                setSoDienthoai();
-                setChucvu();
-                setNgayvaolam();
-                setNoio();
-                setLuong();
+        if(vitri == -1){
+            cout << "Khong tim thay nhan vien!!!\n";}
+        else{
+            cout << "1. Chinh sua tat ca thong tin;\n";
+            cout << "2. Chinh sua Ma nhan vien;\n";
+            cout << "3. Chinh sua Ho va Ten;\n";
+            cout << "4. Chinh sua ngay sinh;";
+            cout << "5. Chinh sua so dien thoai;\n";
+            cout << "6. Chinh sua chuc vu\n";
+            cout << "7. Chinh sua ngay vao lam;\n";
+            cout << "8. Chinh sua noi o;\n";
+            cout << "9. Chinh sua luong;\n";
+            cout << "Chon: ";
+            int choice;
+            cin >> choice;
+            cin.ignore();
+            switch(choice){
+                case 1: {
+                    setMaNhanvien();
+                    setHovaTen();
+                    setNgaysinh();
+                    setSoDienthoai();
+                    setChucvu();
+                    setNgayvaolam();
+                    setNoio();
+                    setLuong();
+                    break;
+                }
+                case 2:{
+                    setMaNhanvien();
+                    break;
+                }
+                case 3:{
+                    setHovaTen();
+                    break;
+                }
+                case 4:{
+                    setNgaysinh();
+                    break;
+                }
+                case 5:{
+                    setSoDienthoai();
+                    break;
+                }
+                case 6:{
+                    setChucvu();
+                    break;
+                }
+                case 7:{
+                    setNgayvaolam();
+                    break;
+                }
+                case 8:{
+                    setNoio();
+                    break;
+                }
+                case 9:{
+                    setLuong();
+                    break;
+                }
+                default:
                 break;
             }
-            case 2:{
-                setMaNhanvien();
-                break;
-            }
-            case 3:{
-                setHovaTen();
-                break;
-            }
-            case 4:{
-                setNgaysinh();
-                break;
-            }
-            case 5:{
-                setSoDienthoai();
-                break;
-            }
-            case 6:{
-                setChucvu();
-                break;
-            }
-            case 7:{
-                setNgayvaolam();
-                break;
-            }
-            case 8:{
-                setNoio();
-                break;
-            }
-            case 9:{
-                setLuong();
-                break;
-            }
-            default:
-            break;
         }
     }
 };
@@ -1570,7 +1616,7 @@ void menuXoaSp(myphamNoi list1[], myphamNgoai list2[]){
                 break;
             }
         } 
-        cout << "Muon tiep tuc them ?\n" << "Chon 0 de exit, 1 de tiep tuc: ";
+        cout << "Muon tiep tuc xoa ?\n" << "Chon 0 de exit, 1 de tiep tuc: ";
         cin >> exit;
     }while(exit == 1);
 }
@@ -1642,24 +1688,22 @@ void menuChinhsuaSp(myphamNoi list1[], myphamNgoai list2[]){
     int exit = 1;
     do{
         system("cls");
-        cout << "1. Xoa my pham noi;\n" << "2. Xoa my pham ngoai.\n";
+        cout << "1. chinh my pham noi;\n" << "2. chinh my pham ngoai.\n";
         int choice;
         cin >> choice;
         switch(choice){
             case 1:{
-                list1[Soluong::myphamNoi].Xoa(list1);
-                Soluong::myphamNoi--;
+                list1[Soluong::myphamNoi].suaThongtin(list1);
                 list1->ghiFile(list1, Soluong::myphamNoi);
                 break;
             }
             case 2:{
-                list2[Soluong::myphamNgoai].Xoa(list2);
-                Soluong::myphamNgoai--;
+                list2[Soluong::myphamNgoai].suaThongtin(list2);
                 list2->ghiFile(list2, Soluong::myphamNgoai);
                 break;
             }
         } 
-        cout << "Muon tiep tuc them ?\n" << "Chon 0 de exit, 1 de tiep tuc: ";
+        cout << "Muon tiep tuc sua ?\n" << "Chon 0 de exit, 1 de tiep tuc: ";
         cin >> exit;
     }while(exit == 1);
 }
@@ -2038,6 +2082,36 @@ void menuQuanlyKhachhang(khachHangThuong nguoimua1[], khachHangVip nguoimua2[]){
         }
     }
 }
+void menuTinhluong(nhanvien nv[]){
+    int vitri;
+    cout << "Nhap ma nhan vien can tinh luong: ";
+    string maNV;
+    cin.ignore();
+    getline(cin, maNV);
+    for(int i = 0; i < Soluong::Nhanvien; i++){
+        if(nv[i].getMaNhanvien() == maNV){
+            vitri = i;
+            float luongtheogio;
+            float soGio;
+            cout << "Nhap luong theo gio: ";
+            cin >> luongtheogio;
+            cout << "So gio lam viec cua nhan vien: ";
+            cin >> soGio;
+            float tienluong = nv[vitri].getLuong() * luongtheogio*soGio;
+            cout << "Tien luong cua nhan vien la: " << tienluong << endl;
+            cout << "Nhan phim bat ky de tiep tuc!";
+            cin.ignore();
+            cin.get();
+            break;
+        }else{
+            cout << "Khong tim thay nhan vien!";
+            cout << "Nhan phim bat ky de tiep tuc!";
+            cin.ignore();
+            cin.get();
+            break;
+        }
+    }
+}
 int menu(myphamNoi list1[], myphamNgoai list2[], 
 khachHangThuong nguoimua1[], khachHangVip nguoimua2[], nhanvien nv[]){
     system("cls");
@@ -2047,6 +2121,7 @@ khachHangThuong nguoimua1[], khachHangVip nguoimua2[], nhanvien nv[]){
         << "|2. Quan ly danh sach my pham;\t |\n"
         << "|3. Quan ly danh sach nhan vien; |\n"
         << "|4. Quan ly danh sach khach hang;|\n"
+        << "|5. Tinh luong nhan vien;\t |\n"
         << "|0. De thoat.\t\t\t |\n";
     cout << "----------------------------------\n";
     cout <<"Chon: ";
@@ -2067,6 +2142,10 @@ khachHangThuong nguoimua1[], khachHangVip nguoimua2[], nhanvien nv[]){
         break;
         case 4:
         menuQuanlyKhachhang(nguoimua1, nguoimua2);
+        return 1;
+        break;
+        case 5:
+        menuTinhluong(nv);
         return 1;
         break;
         case 0:
