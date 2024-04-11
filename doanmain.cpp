@@ -247,7 +247,6 @@ class myphamNoi : public hangNoidia{
                 outfile.close();
             }
         }
-
     }
     void docFile(myphamNoi sanpham[]){
         ifstream file(f_txt);
@@ -298,7 +297,7 @@ class myphamNoi : public hangNoidia{
         for(int i = vitriXoa; i < n - 1; i++){
             sanpham[i] = sanpham[i+1];
         }
-        cout << "Da xoa thanh cong!";
+        cout << "Da xoa thanh cong!\n";
         int sosanpham = n - 1;
         ghiFile(sanpham, sosanpham);
         int choice;
@@ -521,7 +520,7 @@ class myphamNgoai : public hangNgoaidia{
         for(int i = vitriXoa; i < n - 1; i++){
             sanpham[i] = sanpham[i+1];
         }
-        cout << "Da xoa thanh cong!";
+        cout << "Da xoa thanh cong!\n";
         int sosanpham = n - 1;
         ghiFile(sanpham, sosanpham);
         int choice;
@@ -600,7 +599,7 @@ class khachHangThuong : public nguoi{
         this -> ngayMua = date(ngay, thang, nam);
     }
     void setDiemtichluy(){
-        cout << "Nhap so hang da mua: ";
+        cout << "Nhap diem tich luy: ";
         cin >> diemTichLuy;
     }
     void setDiemtichluy(int dtl){
@@ -613,7 +612,6 @@ class khachHangThuong : public nguoi{
         return diemTichLuy;
     }
     void setThongtin(){
-        cin.ignore();
         setHovaTen();
         setNgaysinh();
         cin.ignore();
@@ -664,71 +662,114 @@ class khachHangThuong : public nguoi{
             break;
         }
     }
-    float thanhToan(float giatri, int soluong){
-        return giatri = giatri*soluong*(1);
-    }
-    float thanhToan(myphamNoi list1[], myphamNgoai list2[], int n1, int n2) {
+    // float thanhToan(float giatri, int soluong){
+    //     return giatri = giatri*soluong*(1);
+    // }
+    ///////
+    ///////////////////////////////////////////////////////////////////////////////////////
+    void thanhToan(khachHangThuong khach[], myphamNoi list1[], myphamNgoai list2[]) {
+        int slmpnoi = list1->kiemTraTxt();
+        int slmpngoai = list2->kiemTraTxt(); 
+        // cout << "slmpngoai " << slmpngoai << endl;
+        int slkh = khach->kiemTraTxt();
         float total = 0;
-        float giamgia = 1;
+        float giamgia = 1;// giam 5%
         int soLuong = 0;
-        while (1) {
-            cout << "Nhap ma hang: ";
-            string maHang;
-            cin.ignore();
-            getline(cin, maHang);
-            // Check if the product is in the local cosmetics list
-            for (int i = 0; i < n1; i++) {
-                if (list1[i].getMahang() == maHang) {
-                    cout << "San pham: " << list1[i].getTenHang();
-                    cout <<" so luong : "<< list1[i].getSoluong();
-                    cout <<" Gia tien : "<< list1[i].getTriGia() << endl;
-                    if (list1[i].getSoluong() == 0){
-                        cout << "San pham da het hang!!!";
-                        break;
+        int thanhtien = 0;
+        int exit = 0;
+        if(slmpngoai == 0 && slmpnoi == 0){
+            cout << "Hien tai cua hang chua co san pham nao!!!\n";
+        }else if(slkh == 0){
+            cout << "Hien tai cua hang chua co khach hang vip nao!!!\n";
+        }
+        if(slkh != 0){
+            int error = 0;
+            while(1){
+                if(exit == 1) break;
+                cout << "Nhap ID: ";
+                string iid;
+                cin.ignore();
+                getline(cin, iid);
+                int vitri = timKiem(khach, iid, slkh);
+                if(vitri == -1){
+                    cout << "Khong tim thay khach hang!!!\n";
+                }else{
+                    cout << "Chao mung khach hang: " << khach[vitri].getHovaTen() << endl;
+                    cout << "So dien thoai: " << khach[vitri].getsoDienthoai() << endl;
+                    cout << "Diem tich luy: " << khach[vitri].getDiemtichluy() << endl;
+                    while(1){
+                        total = 0;
+                        string mahang;
+                        fflush(stdin);
+                        cout << "Nhap ma hang: ";
+                        getline(cin, mahang);
+                        for(int i = 0; i < slmpnoi; i++){
+                            if(mahang == list1[i].getMahang()){
+                                cout << "San pham: " << list1[i].getTenHang() << endl;
+                                cout <<" so luong : "<< list1[i].getSoluong() << endl;
+                                cout <<" Gia tien : "<< list1[i].getTriGia() << endl;
+                                if (list1[i].getSoluong() == 0){
+                                    cout << "San pham da het hang!!!\n";
+                                    break;
+                                }
+                                cout << "Nhap so luong muon mua: ";
+                                cin >> soLuong;     
+                                float giaBan = list1[i].getTriGia();
+                                total += giaBan * soLuong;
+                                list1[i].setSoluong(list1[i].getSoluong() - soLuong);
+                                list1->ghiFile(list1, slmpnoi);
+                                // break;
+                            }
+                        }
+                        for(int i = 0; i < slmpngoai; i++){
+                            if(mahang == list2[i].getMahang()){
+                                cout << "San pham: " << list2[i].getTenHang() << endl;
+                                cout <<" so luong : "<< list2[i].getSoluong() << endl;
+                                cout <<" Gia tien : "<< list2[i].getTriGia() << endl;
+                                if (list2[i].getSoluong() == 0){
+                                    cout << "San pham da het hang!!!\n";
+                                    break;
+                                }
+                                cout << "Nhap so luong muon mua: ";
+                                cin >> soLuong;     
+                                float giaBan = list2[i].getTriGia();
+                                total += giaBan * soLuong;
+                                list2[i].setSoluong(list2[i].getSoluong() - soLuong);
+                                list2->ghiFile(list2, slmpngoai);
+                                // break;
+                            }
+                        }
+                        thanhtien = thanhtien + total*giamgia;
+                        cout << "Nhap 0 de ket thuc thanh toan cho khach hang " << khach[vitri].getHovaTen()
+                        << "\nNhap 1 de tiep tuc thanh toan\n";
+                        int choice;
+                        cin >> choice;
+                        if (choice == 0) {
+                            exit = 1;
+                            if( thanhtien >= 500000 && thanhtien < 1000000){
+                                giamgia  = 0.85; //giam 15%
+                            }else if (thanhtien >= 1000000 && thanhtien < 2000000){
+                                giamgia = 0.8 ;// giam 20%
+                            }else if (thanhtien >= 2000000){
+                                giamgia = 0.7; // giam 30%
+                            }
+                            cout << "Tong tien: " << thanhtien*giamgia <<" VND"<<endl;
+                            ///////////////////
+                            cout << "Nhan phim bat ky de ket thuc!!!";
+                            cin.ignore();
+                            cin.get();
+                            ////////////////
+                            break;// này là break vòng while hả// đsung k, ddr may
+                        }
+                        else{
+                            continue;
+                        }
                     }
-                    cout << "Nhap so luong muon mua: ";
-                    cin >> soLuong;     
-                    float giaBan = list1[i].getTriGia();
-                    total += giaBan * soLuong;
-                    list1[i].setSoluong(list1[i].getSoluong() - soLuong);
-                    break;
                 }
-            }
-
-            // Check if the product is in the imported cosmetics list
-            for (int i = 0; i < n2; i++) {
-                if (list2[i].getMahang() == maHang) {
-                    cout << "San pham: " << list2[i].getTenHang();
-                    cout <<" so luong : "<< list2[i].getSoluong();
-                    cout <<" Gia tien : "<< list2[i].getTriGia() << endl;
-                    if (list2[i].getSoluong() == 0){
-                        cout << "San pham da het hang!!!";
-                        break;
-                    }
-                    cout << "Nhap so luong muon mua: ";
-                    cin >> soLuong;     
-                    float giaBan = list2[i].getTriGia();
-                    total += giaBan * soLuong;
-                    list2[i].setSoluong(list2[i].getSoluong() - soLuong);
-                    break;
-                }
-            }
-            cout << "Nhap 0 de ket thuc thanh toan, nhap 1 de tiep tuc: ";
-            int choice;
-            cin >> choice;
-            if (choice == 0) {
-                if( total >= 500000 && total < 1000000){
-                    giamgia  = 0.9; //giam 10%
-                }else if (total >= 1000000 && total < 2000000){
-                    giamgia = 0.85 ;// giam 15%
-                }else if (total >= 2000000){
-                    giamgia = 0.8; // giam 20%
-                }     
-                break;
             }
         }
-        return total*giamgia;
     }
+    ///////
     string f_txt = "data_khachhang_thuong.txt";
     int kiemTraTxt(){//Kiểm tra file đã chứa bao nhiêu sản phẩm, f_txt <- data.txt;
         int n = 0;
@@ -827,7 +868,7 @@ class khachHangThuong : public nguoi{
         for(int i = vitriXoa; i < n - 1; i++){
             khachhang[i] = khachhang[i+1];
         }
-        cout << "Da xoa thanh cong!";
+        cout << "Da xoa thanh cong!\n";
         int sokhach = n - 1;
         ghiFile(khachhang, sokhach);
         int choice;
@@ -996,39 +1037,42 @@ class khachHangVip : public nguoi{
             break;
         }
     }
+///////////////////////////////////////////////////////////////////////////////////////
     void thanhToan(khachHangVip khach[], myphamNoi list1[], myphamNgoai list2[]) {
         int slmpnoi = list1->kiemTraTxt();
-        int slmpngoai = list2->kiemTraTxt();
+        int slmpngoai = list2->kiemTraTxt(); 
+        // cout << "slmpngoai " << slmpngoai << endl;
         int slkh = khach->kiemTraTxt();
         float total = 0;
-        float giamgia = 1;
+        float giamgia = 0.95;// giam 5%
         int soLuong = 0;
         int thanhtien = 0;
         int exit = 0;
         if(slmpngoai == 0 && slmpnoi == 0){
-            cout << "Hien tai cua hang chua co san pham nao!!!";
+            cout << "Hien tai cua hang chua co san pham nao!!!\n";
         }else if(slkh == 0){
-            cout << "Hien tai cua hang chua co khach hang vip nao!!!";
+            cout << "Hien tai cua hang chua co khach hang vip nao!!!\n";
         }
         if(slkh != 0){
+            int error = 0;
+            string iid;
+            string mahang;
+            cin.ignore();
             while(1){
                 if(exit == 1) break;
                 cout << "Nhap ID: ";
-                string iid;
-                cin.ignore();
                 getline(cin, iid);
                 int vitri = timKiem(khach, iid, slkh);
                 if(vitri == -1){
-                    cout << "Khong tim thay khach hang!!!";
+                    cout << "Khong tim thay khach hang!!!\n";
                 }else{
                     cout << "Chao mung khach hang: " << khach[vitri].getHovaTen() << endl;
                     cout << "So dien thoai: " << khach[vitri].getsoDienthoai() << endl;
                     cout << "Diem tich luy: " << khach[vitri].getDiemtichluy() << endl;
-                    cout << "Phan tram giam gia: " << khach[vitri].getPhantramGiamgia() << endl;
                     while(1){
-                        string mahang;
+                        total = 0;
+                        fflush(stdin);
                         cout << "Nhap ma hang: ";
-                        cin.ignore();
                         getline(cin, mahang);
                         for(int i = 0; i < slmpnoi; i++){
                             if(mahang == list1[i].getMahang()){
@@ -1036,7 +1080,7 @@ class khachHangVip : public nguoi{
                                 cout <<" so luong : "<< list1[i].getSoluong() << endl;
                                 cout <<" Gia tien : "<< list1[i].getTriGia() << endl;
                                 if (list1[i].getSoluong() == 0){
-                                    cout << "San pham da het hang!!!";
+                                    cout << "San pham da het hang!!!\n";
                                     break;
                                 }
                                 cout << "Nhap so luong muon mua: ";
@@ -1044,16 +1088,17 @@ class khachHangVip : public nguoi{
                                 float giaBan = list1[i].getTriGia();
                                 total += giaBan * soLuong;
                                 list1[i].setSoluong(list1[i].getSoluong() - soLuong);
-                                break;
+                                list1->ghiFile(list1, slmpnoi);
+                                // break;
                             }
                         }
                         for(int i = 0; i < slmpngoai; i++){
                             if(mahang == list2[i].getMahang()){
-                                cout << "San pham: " << list2[i].getTenHang();
-                                cout <<" so luong : "<< list2[i].getSoluong();
+                                cout << "San pham: " << list2[i].getTenHang() << endl;
+                                cout <<" so luong : "<< list2[i].getSoluong() << endl;
                                 cout <<" Gia tien : "<< list2[i].getTriGia() << endl;
                                 if (list2[i].getSoluong() == 0){
-                                    cout << "San pham da het hang!!!";
+                                    cout << "San pham da het hang!!!\n";
                                     break;
                                 }
                                 cout << "Nhap so luong muon mua: ";
@@ -1061,32 +1106,44 @@ class khachHangVip : public nguoi{
                                 float giaBan = list2[i].getTriGia();
                                 total += giaBan * soLuong;
                                 list2[i].setSoluong(list2[i].getSoluong() - soLuong);
-                                break;
+                                list2->ghiFile(list2, slmpngoai);
+                                // break;
                             }
                         }
-                        
-                        if( total >= 500000 && total < 1000000){
-                            giamgia  = 0.9; //giam 10%
-                        }else if (total >= 1000000 && total < 2000000){
-                            giamgia = 0.85 ;// giam 15%
-                        }else if (total >= 2000000){
-                            giamgia = 0.8; // giam 20%
-                        }  
-                        thanhtien = total*giamgia;
-                        cout << "Tong tien: " << total*giamgia <<" VND"<<endl;
+                        thanhtien = thanhtien + total*giamgia;
                         cout << "Nhap 0 de ket thuc thanh toan cho khach hang " << khach[vitri].getHovaTen()
                         << "\nNhap 1 de tiep tuc thanh toan\n";
                         int choice;
                         cin >> choice;
                         if (choice == 0) {
                             exit = 1;
-                            break;
+                            if( thanhtien >= 500000 && thanhtien < 1000000){
+                                giamgia  = 0.85; //giam 15%
+                                cout << "Giam gia 15%\n";
+                            }else if (thanhtien >= 1000000 && thanhtien < 2000000){
+                                giamgia = 0.8 ;// giam 20%
+                                cout << "Giam gia 20%\n";
+                            }else if (thanhtien >= 2000000){
+                                giamgia = 0.7; // giam 30%
+                                cout << "Giam gia 30%\n";
+                            }
+                            cout << "Tong tien: " << thanhtien*giamgia <<" VND"<<endl;
+                            ///////////////////
+                            cout << "Nhan phim bat ky de ket thuc!!!";
+                            cin.ignore();
+                            cin.get();
+                            ////////////////
+                            break;// này là break vòng while hả// đsung k, ddr may
+                        }
+                        else{
+                            continue;
                         }
                     }
                 }
             }
         }
     }
+///////////////////////////////////////////////////////////////////////////////////////
     string f_txt = "data_khachhang_vip.txt";
     int kiemTraTxt(){//Kiểm tra file đã chứa bao nhiêu sản phẩm, f_txt <- data.txt;
         int n = 0;
@@ -1099,7 +1156,6 @@ class khachHangVip : public nguoi{
         return n;
         file.close();
     }
-    
     void ghiFile(khachHangVip khachhang[], int soluongkhachhang){
         // int n = kiemTraTxt();
         while(1){
@@ -1205,7 +1261,7 @@ class khachHangVip : public nguoi{
         for(int i = vitriXoa; i < n - 1; i++){
             khachhang[i] = khachhang[i+1];
         }
-        cout << "Da xoa thanh cong!";
+        cout << "Da xoa thanh cong!\n";
         int sokhach = n - 1;
         ghiFile(khachhang, sokhach);
         int choice;
@@ -1395,7 +1451,7 @@ class nhanvien : public nguoi{
         for(int i = vitriXoa; i < n - 1; i++){
             nv[i] = nv[i+1];
         }
-        cout << "Da xoa thanh cong!";
+        cout << "Da xoa thanh cong!\n";
         int sonhanvien = n - 1;
         ghiFile(nv, sonhanvien);
         int choice;
@@ -1654,7 +1710,7 @@ khachHangVip nguoimua[]){
 }
 void menuThanhtoanKhachthuong(myphamNoi list1[], 
 myphamNgoai list2[], khachHangThuong nguoimua[]){
-    nguoimua->thanhToan(list1, list2, Soluong::myphamNoi, Soluong::myphamNgoai);
+    nguoimua->thanhToan(nguoimua, list1, list2);
 }
 void menuThanhtoan(myphamNoi list1[], myphamNgoai list2[], 
 khachHangThuong nguoimua1[], khachHangVip nguoimua2[]){
@@ -1895,18 +1951,24 @@ void timKiemKhachhang(khachHangThuong nguoimua1[], khachHangVip nguoimua2[]){
             getline(cin, id);
             int n = nguoimua2->kiemTraTxt();
             if(n == 0){
-                cout << "Khong co khach hang nao trong danh sach!";
-                cout << "Thu nhap so dien thoai de tim kiem";
+                cout << "Khong co khach hang nao trong danh sach!\n";
+                cout << "Thu nhap so dien thoai de tim kiem\n";
             }else{
                 int vitri = nguoimua2->timKiem(nguoimua2, id, n);
-                cout << "ID: " << nguoimua2[vitri].getIDkhachVip() << endl;
-                cout << "Ho va ten: " << nguoimua2[vitri].getHovaTen() << endl;
-                cout << "So dien thoai: " << nguoimua2[vitri].getsoDienthoai() << endl;
-                cout << "Ngay sinh: " << nguoimua2[vitri].getNgaySinh().ngay << "/" << nguoimua2[vitri].getNgaySinh().thang << "/" << nguoimua2[vitri].getNgaySinh().nam << endl;
-                cout << "Ngay mua gan nhat: " << nguoimua2[vitri].getNgaymua().ngay << "/" << nguoimua2[vitri].getNgaymua().thang << "/" << nguoimua2[vitri].getNgaymua().nam << endl;
-                cout << "Diem tich luy: " << nguoimua2[vitri].getDiemtichluy() << endl;
-                cout << "Phan tram giam gia: " << nguoimua2[vitri].getPhantramGiamgia() << endl;
-                cout << "Loai the VIP ";
+                if(vitri != -1){
+                    cout << "ID: " << nguoimua2[vitri].getIDkhachVip() << endl;
+                    cout << "Ho va ten: " << nguoimua2[vitri].getHovaTen() << endl;
+                    cout << "So dien thoai: " << nguoimua2[vitri].getsoDienthoai() << endl;
+                    cout << "Ngay sinh: " << nguoimua2[vitri].getNgaySinh().ngay << "/" << nguoimua2[vitri].getNgaySinh().thang << "/" << nguoimua2[vitri].getNgaySinh().nam << endl;
+                    cout << "Ngay mua gan nhat: " << nguoimua2[vitri].getNgaymua().ngay << "/" << nguoimua2[vitri].getNgaymua().thang << "/" << nguoimua2[vitri].getNgaymua().nam << endl;
+                    cout << "Diem tich luy: " << nguoimua2[vitri].getDiemtichluy() << endl;
+                    cout << "Phan tram giam gia: " << nguoimua2[vitri].getPhantramGiamgia() << endl;
+                    cout << "Loai the VIP \n";
+                }
+                else{
+                    cout << "Khong tim thay khach hang!\n";
+                    cout << "Thu nhap so dien thoai de tim kiem";
+                }
             }
             
             break;
@@ -1918,8 +1980,8 @@ void timKiemKhachhang(khachHangThuong nguoimua1[], khachHangVip nguoimua2[]){
             getline(cin, sdt);
             int n = nguoimua1->kiemTraTxt();
             if(n == 0){
-                cout << "Khong co khach hang nao trong danh sach!";
-                cout << "Thu nhap ID de tim kiem";
+                cout << "Khong co khach hang nao trong danh sach!\n";
+                cout << "Thu nhap ID de tim kiem\n";
             }else{
                 int vitri = nguoimua1->timKiem(nguoimua1, sdt, n);
                 cout << "Ho va ten: " << nguoimua1[vitri].getHovaTen() << endl;
@@ -1927,7 +1989,7 @@ void timKiemKhachhang(khachHangThuong nguoimua1[], khachHangVip nguoimua2[]){
                 cout << "Ngay sinh: " << nguoimua1[vitri].getNgaySinh().ngay << "/" << nguoimua1[vitri].getNgaySinh().thang << "/" << nguoimua1[vitri].getNgaySinh().nam << endl;
                 cout << "Ngay mua gan nhat: " << nguoimua1[vitri].getNgaymua().ngay << "/" << nguoimua1[vitri].getNgaymua().thang << "/" << nguoimua1[vitri].getNgaymua().nam << endl;
                 cout << "Diem tich luy: " << nguoimua1[vitri].getDiemtichluy() << endl;
-                cout << "Loai the thuong";
+                cout << "Loai the thuong\n";
 
             }
         }
