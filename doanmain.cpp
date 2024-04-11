@@ -778,7 +778,10 @@ class khachHangThuong : public nguoi{
                         cin >> choice;
                         if (choice == 0) {
                             exit = 1;
+                            int diem = thanhtien/1000000;
+                            khach[vitri].setDiemtichluy(khach[vitri].getDiemtichluy() + diem);
                             cout << "Tong tien: " << thanhtien<<" VND"<<endl;
+                            khach->ghiFile(khach, slkh);
                             cout << "Nhan phim bat ky de ket thuc!!!";
                             cin.ignore();
                             cin.get();
@@ -1162,6 +1165,8 @@ class khachHangVip : public nguoi{
                                 cout << "Giam gia 30%\n";
                                 cout << "Tong tien chua giam gia: " << thanhtien <<" VND"<<endl;
                             }
+                            khach[vitri].setDiemtichluy(khach[vitri].getDiemtichluy() + thanhtien/1000000);
+                            khach->ghiFile(khach, slkh);
                             cout << "Tong tien: " << thanhtien*giamgia <<" VND"<<endl;
                             ///////////////////
                             cout << "Nhan phim bat ky de ket thuc!!!";
